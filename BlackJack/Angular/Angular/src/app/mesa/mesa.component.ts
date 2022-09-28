@@ -120,6 +120,7 @@ export class MesaComponent implements OnInit {
       }
     }
 
+    if(this.flagNuevaPartida != false){
     if(this.puntosJugador > this.puntosCompu && this.puntosJugador <=21 || this.puntosCompu >21){
       alert("Ganaste!")
       this.flagNuevaPartida = false;
@@ -130,5 +131,6 @@ export class MesaComponent implements OnInit {
       alert("Empate.")
       this.flagNuevaPartida = false;
     }
+  }
   }
 }
