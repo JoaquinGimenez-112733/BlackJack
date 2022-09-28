@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row" id="compu">
+    <h1>COMPU</h1>
+    <h3>Puntos: {{ puntosCompu }}</h3>
+    <span *ngFor="let cc of manoCompu">
+      <img
+        *ngIf="cc.orden != 4"
+        src="../../assets/cartas/{{ cc.numero }}_of_{{ cc.palo }}.png"
+      />
+      <img *ngIf="cc.orden == 4" src="../../assets/cartas/back.png" />
+    </span>
+  </div>
+  <div class="row" id="jugador">
+    <h1>Jugador</h1>
+    <h3>Puntos: {{ puntosJugador }}</h3>
+    <span *ngFor="let cj of manoJugador"
+      ><img src="../../assets/cartas/{{ cj.numero }}_of_{{ cj.palo }}.png"
+    /></span>
+  </div>
+  <div class="row" id="controles">
+    <button [disabled]="flagNuevaPartida" (click)="nuevaPartida()">
+      Nueva Partida
+    </button>
+    <button (click)="pedirCarta()">Otra carta</button
+    ><button (click)="pasar()">Plantarse</button>
+  </div>
+</div>
