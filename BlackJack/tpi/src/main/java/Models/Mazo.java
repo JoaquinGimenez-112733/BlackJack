@@ -15,17 +15,17 @@ public class Mazo {
 
     public ArrayList<Carta> nuevoMazo() {
         this.mazo = new ArrayList<Carta>();
-        String[] numeros = {"ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"};
+        String[] numeros = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
         String[] palos = {"spades", "clubs", "hearts", "diamonds"};
 
         for (String palo : palos) {
             for (String numero : numeros) {
 
-                if (numero == "jack" || numero == "king" || numero == "queen") {
+                if (numero == "J" || numero == "K" || numero == "Q") {
                     int valor = 10;
                     Carta carta = new Carta(numero, palo, valor, 0);
                     this.mazo.add(carta);
-                } else if (numero == "ace") {
+                } else if (numero == "A") {
                     int valor = 11;
                     Carta carta = new Carta(numero, palo, valor, 0);
                     this.mazo.add(carta);

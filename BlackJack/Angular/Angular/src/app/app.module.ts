@@ -7,11 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MesaComponent } from './mesa/mesa.component';
 import { MazoService } from './services/mazo.service';
+import { CartaComponent } from './carta/carta.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MesaComponent
+    MesaComponent,
+    CartaComponent
   ],
   imports: [
     BrowserModule,
