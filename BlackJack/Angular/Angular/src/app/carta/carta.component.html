@@ -1,0 +1,26 @@
+<div
+  class="card"
+  [ngStyle]="{
+    position: 'relative',
+    left: offset() + 'px'
+  }"
+  (mouseenter)="setHover(true)"
+  (mouseleave)="setHover(false)"
+  [ngClass]="hover ? 'card-hover' : ''"
+>
+  <div
+    *ngIf="visible"
+    class="numero"
+    [ngClass]="palo === 'hearts' || palo === 'diamonds' ? 'rojo' : ''"
+  >
+    {{ numero }}
+  </div>
+  <div
+    *ngIf="visible"
+    class="palo"
+    [ngClass]="palo === 'hearts' || palo === 'diamonds' ? 'rojo' : ''"
+  >
+    {{ mostrarPalo() }}
+  </div>
+  <div *ngIf="!visible" class="card-back"></div>
+</div>
