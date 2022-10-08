@@ -12,7 +12,7 @@
           [valor]="cj.valor"
           [orden]="cj.orden"
           [index]="i"
-          [visible]="!flagNuevaPartida"
+          [visible]="cj.orden == 2 || !flagNuevaPartida"
         ></app-carta>
       </div>
     </div>
