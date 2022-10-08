@@ -26,7 +26,7 @@ public class Mazo {
                     Carta carta = new Carta(numero, palo, valor, 0);
                     this.mazo.add(carta);
                 } else if (numero == "A") {
-                    int valor = 11;
+                    int valor = 1;
                     Carta carta = new Carta(numero, palo, valor, 0);
                     this.mazo.add(carta);
                 } else {

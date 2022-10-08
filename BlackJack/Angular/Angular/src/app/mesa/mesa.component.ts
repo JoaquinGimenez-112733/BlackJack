@@ -28,7 +28,7 @@ export class MesaComponent implements OnInit {
 
   nuevaPartida() {
     this.flagNuevaPartida = true;
-    //inicilizamos
+    //inicializamos
     this.puntosCompu = 0;
     this.puntosJugador = 0;
     this.puntoOcultoCompu = 0;
@@ -44,31 +44,41 @@ export class MesaComponent implements OnInit {
           console.log(this.mazo);
 
           this.carta = this.mazo[0]; //primer carta jugador
+          if(this.carta.numero == 'A'){
+            this.carta.valor = 11
+          }
           this.manoJugador.push(this.carta);
           this.mazo.splice(0, 1);
           this.puntosJugador = this.puntosJugador + this.carta.valor;
 
           this.carta = this.mazo[0]; //primer carta compu
+          if(this.carta.numero == 'A'){
+            this.carta.valor = 11
+          }
           this.manoCompu.push(this.carta);
           this.mazo.splice(0, 1);
           this.puntosCompu = this.puntosCompu + this.carta.valor;
 
           this.carta = this.mazo[0]; //segunda carta jugador
+          //el ás puede valer 1 o 11 puntos, dependiendo de nuestro puntaje acumulado
+          if (this.puntosJugador < 11 && this.carta.numero == 'A') {
+            this.carta.valor = 11;
+          }
           this.manoJugador.push(this.carta);
           this.mazo.splice(0, 1);
-          //el ás puede valer 1 o 11 puntos, dependiendo de nuestro puntaje acumulado
-          if (this.puntosJugador == 11 && this.carta.numero == 'ace') {
-            this.carta.valor = 1;
-          }
+          
+
           this.puntosJugador = this.puntosJugador + this.carta.valor;
 
           this.carta = this.mazo[0]; //segunda carta jugador
+          //el ás puede valer 1 o 11 puntos, dependiendo de nuestro puntaje acumulado
+          if (this.puntosJugador < 11 && this.carta.numero == 'A') {
+            this.carta.valor = 11;
+          }
           this.manoCompu.push(this.carta);
           this.mazo.splice(0, 1);
-          //el ás puede valer 1 o 11 puntos, dependiendo de nuestro puntaje acumulado
-          if (this.puntosCompu == 11 && this.carta.numero == 'ace') {
-            this.carta.valor = 1;
-          }
+          
+
           this.puntoOcultoCompu = this.carta.valor;
           //this.puntosCompu = this.puntosCompu + this.carta.valor
         },
@@ -76,16 +86,38 @@ export class MesaComponent implements OnInit {
     );
   }
 
+  // pedirCarta() {
+  //   this.carta = this.mazo[0];
+  //   //el ás puede valer 1 o 11 puntos, dependiendo de nuestro puntaje acumulado
+  //   let as = this.manoJugador.find(o=> o.numero === "A" )
+
+  //   if (this.puntosJugador >= 11 && this.carta.numero == 'A') {
+  //     this.carta.valor = 1;
+  //   }
+  //   this.puntosJugador = this.puntosJugador + this.carta.valor;
+  //   this.manoJugador.push(this.carta);
+  //   this.mazo.splice(0, 1);
+
+  //   if (this.puntosJugador > 21) {
+  //     alert('Perdiste!');
+  //     this.flagNuevaPartida = false;
+  //   }
+  // }
+
   pedirCarta() {
     this.carta = this.mazo[0];
     //el ás puede valer 1 o 11 puntos, dependiendo de nuestro puntaje acumulado
-    if (this.puntosJugador >= 11 && this.carta.numero == 'ace') {
-      this.carta.valor = 1;
-    }
-    this.puntosJugador = this.puntosJugador + this.carta.valor;
+    
+        
     this.manoJugador.push(this.carta);
     this.mazo.splice(0, 1);
 
+    let as = this.manoJugador.find(o=> o.numero === "A" )
+    this.puntosJugador = 0
+    this.sumarPuntos()
+    if(as && ((this.puntosJugador) < 12)){
+      this.puntosJugador += 10
+    }
     if (this.puntosJugador > 21) {
       alert('Perdiste!');
       this.flagNuevaPartida = false;
@@ -99,7 +131,7 @@ export class MesaComponent implements OnInit {
     while (this.puntosCompu < 17) {
       this.carta = this.mazo[0];
       //el ás puede valer 1 o 11 puntos, dependiendo de nuestro puntaje acumulado
-      if (this.puntosCompu >= 11 && this.carta.numero == 'ace') {
+      if (this.puntosCompu >= 11 && this.carta.numero == 'A') {
         this.carta.valor = 1;
       }
       this.puntosCompu = this.puntosCompu + this.carta.valor;
@@ -129,5 +161,12 @@ export class MesaComponent implements OnInit {
         this.flagNuevaPartida = false;
       }
     }
+  }
+
+
+  sumarPuntos(){
+    this.manoJugador.forEach(element => {
+      this.puntosJugador += element.valor
+    });
   }
 }
