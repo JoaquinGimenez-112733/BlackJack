@@ -1,0 +1,204 @@
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromBelow {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutToBelow {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(150%);
+  }
+}
+
+body {
+  font-family: "Inconsolata", monospace;
+  background-color: #12553c;
+  font-size: 2rem;
+  text-shadow: 1px 1px 1px #000;
+  color: #fff;
+}
+img {
+  width: 8%;
+  height: 8%;
+}
+span {
+  margin-left: 5px;
+}
+
+.boton {
+  transition: box-shadow ease 0.3s;
+  transition: transform ease 0.3s;
+}
+
+.boton:hover {
+  transform: scale(1.1);
+  box-shadow: 5px 5px 2px 1px #183153aa;
+}
+
+.nueva-partida {
+  margin-right: 20px;
+  font-size: large;
+  background-color: #ffd43b;
+  color: #183153;
+  padding: 1rem;
+  border-radius: 50px;
+  border: none;
+  line-height: 0px;
+  height: 50px;
+  width: 50px;
+}
+
+.otra-carta {
+  margin-right: 20px;
+  font-size: large;
+  background-color: #04aa6d;
+  color: #183153;
+  padding: 1rem;
+  border-radius: 50px;
+  border: none;
+  line-height: 0px;
+  height: 50px;
+  width: 50px;
+}
+
+.plantarse {
+  margin-right: 20px;
+  font-size: large;
+  background-color: #ff8787;
+  color: #183153;
+  padding: 1rem;
+  border-radius: 50px;
+  border: none;
+  line-height: 0px;
+  height: 50px;
+  width: 50px;
+}
+
+.mesa {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  height: 38vh;
+}
+
+.mano {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: end;
+  align-content: end;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  width: 30%;
+  height: 100%;
+}
+
+.mano-computadora {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+  align-content: start;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  width: 30%;
+  height: 100%;
+}
+
+.jugador {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: transparent;
+  height: 50px;
+}
+
+.controles {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: transparent;
+  height: 50px;
+}
+
+.notificacion {
+  left: 50;
+  transform: all 0.5s ease;
+  animation: 1s ease-out 0s 1 slideInFromBelow;
+}
+
+.notificacion_ocultandose {
+  position: absolute;
+  transform: all 0.5s ease;
+  animation: 1s ease-out 0s 1 slideOutToBelow;
+  bottom: -100;
+}
+
+.notificacion__danger {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  position: absolute;
+  right: 0;
+  width: 300px;
+  height: 100px;
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+}
+.notificacion__success {
+  padding: 20px;
+  background-color: #2fb986;
+  color: white;
+  position: absolute;
+  right: 0;
+  width: 300px;
+  height: 100px;
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+}
+.notificacion__warning {
+  padding: 20px;
+  background-color: #ffaa2c;
+  color: white;
+  position: absolute;
+  right: 0;
+  width: 300px;
+  height: 100px;
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+}
