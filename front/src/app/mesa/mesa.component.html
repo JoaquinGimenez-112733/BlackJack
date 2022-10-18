@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="mesa" id="compu">
+    <div class="mano-computadora" id="compu" *ngFor="let mano of jugadores">
+      <div class="jugador">
+        <div>COMPU</div>
+        <div *ngIf="!flagNuevaPartida">Puntos: {{ puntosCompu }}</div>
+      </div>
+      <div *ngFor="let cj of manoCompu; let i = index" [attr.data-index]="i">
+        <app-carta
+          [palo]="cj.palo"
+          [numero]="cj.numero"
+          [valor]="cj.valor"
+          [orden]="cj.orden"
+          [index]="i"
+          [visible]="cj.orden == 2 || !flagNuevaPartida"
+        ></app-carta>
+      </div>
+    </div>
+  </div>
+  <div class="mesa">
+    <div class="mano" id="jugador" *ngFor="let mano of jugadores">
+      <div *ngFor="let cj of manoJugador; let i = index" [attr.data-index]="i">
+        <app-carta
+          [palo]="cj.palo"
+          [numero]="cj.numero"
+          [valor]="cj.valor"
+          [orden]="cj.orden"
+          [index]="i"
+          [visible]="true"
+        ></app-carta>
+      </div>
+      <div class="jugador">
+        <div>Jugador</div>
+        <div>Puntos: {{ puntosJugador }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="controles" id="controles">
+    <button
+      class="boton nueva-partida"
+      [disabled]="flagNuevaPartida"
+      (click)="nuevaPartida()"
+    >
+      <i class="fa-solid fa-arrow-rotate-left"></i>
+    </button>
+    <button
+      [disabled]="!flagNuevaPartida"
+      (click)="pedirCarta()"
+      class="boton otra-carta"
+    >
+      <i class="fa-solid fa-plus"></i>
+    </button>
+    <button class="boton plantarse" (click)="pasar()">
+      <i class="fa fa-stop"></i>
+    </button>
+  </div>
+</div>
+<div
+  ngClass="{{ 'boton notificacion notificacion__' + tipoAlerta }}"
+  *ngIf="alerta"
+  (click)="cerrarNotificacion()"
+>
+  {{ textoAlerta }}
+</div>
