@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
+@CrossOrigin("*")
 public class BlackJackController {
 
     ArrayList<Carta> nuevoMazo;
@@ -40,7 +41,7 @@ public class BlackJackController {
     public String abrirConexion() {
         String msj = "";
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "root", "*Q1w2e3");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "claselab4", "123456");
             msj = "Conexion exitosa!";
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -72,10 +73,10 @@ public class BlackJackController {
         nuevoMazo = new ArrayList<Carta>();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/mazo")
     public manosPartidaDTO getMazo() {
-
+        System.out.println("ABBBEEER");
         //nueva partida
         puntosJugador = 0;
         puntosCompu = 0;
@@ -160,6 +161,7 @@ public class BlackJackController {
         } catch (SQLException ex) {
             ex.printStackTrace();
             msj = "No se pudo registrar su partida";
+            System.out.println(msj);
         } finally {
             cerrarConexion();
         }
@@ -168,7 +170,7 @@ public class BlackJackController {
 
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/pedir")
     public manosPartidaDTO pedirCarta() {
 
@@ -222,12 +224,12 @@ public class BlackJackController {
         return dto;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/pasar")
     public manosPartidaDTO pasar() {
 
         puntosCompu += puntosOcultosCompu;
-
+        puntosOcultosCompu = 0;
         while (puntosCompu < 17) {
 
             Carta carta = nuevoMazo.get(0);
@@ -289,7 +291,7 @@ public class BlackJackController {
                 .signWith(SignatureAlgorithm.HS512, secretKey).compact();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
     public LoginDTO login(@RequestBody Usuario us) {
         int resp = 0;
