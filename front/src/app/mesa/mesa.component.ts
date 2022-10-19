@@ -32,7 +32,7 @@ export class MesaComponent implements OnInit {
     const manos = this.auth.getManos();
 
     if (manos) {
-      this.flagNuevaPartida = true;
+      //this.flagNuevaPartida = true;
       this.mazo = manos?.mazo;
       this.puntosJugador = manos?.puntosJugador;
       this.puntosCompu = manos?.puntosCompu;
@@ -74,6 +74,7 @@ export class MesaComponent implements OnInit {
 
     this.mazoService.nuevoMazo().subscribe({
       next: (cartas: any) => {
+        console.log("ok")
         this.flagNuevaPartida = true;
         this.mazo = cartas?.mazo; //mazo nuevo
         this.puntosCompu = cartas?.puntosCompu;
@@ -81,7 +82,7 @@ export class MesaComponent implements OnInit {
         this.puntoOcultoCompu = cartas?.puntoOcultoCompu;
         this.manoCompu = cartas?.manoCompu;
         this.manoJugador = cartas?.manoJugador;
-      },
+      },error: ()=>{console.log("error")}
     });
   }
 
@@ -95,6 +96,7 @@ export class MesaComponent implements OnInit {
         this.manoCompu = cartas?.manoCompu;
         this.manoJugador = cartas?.manoJugador;
         if (this.puntosJugador > 21) {
+          this.puntosCompu = this.puntosCompu + this.puntoOcultoCompu;
           this.textoAlerta = 'Perdiste';
           this.tipoAlerta = 'danger';
           this.showAlerta();
@@ -105,31 +107,29 @@ export class MesaComponent implements OnInit {
   }
 
   pasar() {
-    this.manoCompu[1].orden = 99;
-    this.puntosCompu += this.puntoOcultoCompu;
-    //como regla de la casa, la compu saca cartas hasta obtener 17 puntos o más
-    while (this.puntosCompu < 17) {
-      this.carta = this.mazo[0];
-      //el ás puede valer 1 o 11 puntos, dependiendo de nuestro puntaje acumulado
 
-      //this.puntosCompu = this.puntosCompu + this.carta.valor;
-      this.manoCompu.push(this.carta);
+    this.mazoService.pasar().subscribe({
+      next: (cartas: any)=>{
+        this.mazo = cartas?.mazo; //mazo nuevo
+        this.puntosCompu = cartas?.puntosCompu;
+        this.puntosJugador = cartas?.puntosJugador;
+        this.puntoOcultoCompu = cartas?.puntoOcultoCompu;
+        this.manoCompu = cartas?.manoCompu;
+        this.manoJugador = cartas?.manoJugador;
 
-      let as = this.manoCompu.find((o) => o.numero === 'A');
-      this.puntosCompu = 0;
-      this.sumarPuntosCompu();
-      if (as && this.puntosCompu < 12) {
-        this.puntosCompu += 10;
-      }
 
-      this.mazo.splice(0, 1);
+        this.manoCompu[1].orden = 99;
+    
+
+
+      
       if (this.puntosCompu > 21) {
         this.textoAlerta = 'Ganaste!';
         this.tipoAlerta = 'success';
         this.showAlerta();
         this.flagNuevaPartida = false;
       }
-    }
+    
 
     if (this.flagNuevaPartida != false) {
       if (
@@ -155,6 +155,9 @@ export class MesaComponent implements OnInit {
         this.flagNuevaPartida = false;
       }
     }
+      }
+    })
+    
   }
 
   sumarPuntos() {
