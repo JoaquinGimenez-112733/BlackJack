@@ -5,8 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { Credenciales } from '../interfaces/credenciales';
 @Injectable()
 export class AuthService {
-  private apiURL = 'http://localhost:8080/login';
-  private manos: any = {};
   constructor(private _http: HttpClient, public jwtHelper: JwtHelperService) {}
 
   public isAuthenticated(): boolean {
@@ -14,18 +12,24 @@ export class AuthService {
     return !!token;
   }
 
-  public setManos(manos: any) {
-    this.manos = manos;
-  }
-
-  public getManos() {
-    return this.manos;
+  public getPartidaEnCurso(): Observable<any> {
+    return this._http.get('http://localhost:8080/partida-en-curso', {
+      responseType: 'json',
+      headers: {
+        Authorization: `${localStorage.getItem('token')}`,
+      },
+    });
   }
 
   public login(usuario: string, contraseña: string): Observable<any> {
-    return this._http.post(this.apiURL, {
+    return this._http.post('http://localhost:8080/login', {
       usuario,
       password: contraseña,
     });
+  }
+
+  public logout(): void {
+    localStorage.removeItem('token');
+    window.location.reload();
   }
 }

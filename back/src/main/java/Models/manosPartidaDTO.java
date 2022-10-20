@@ -6,14 +6,14 @@ package Models;
 
 import java.util.ArrayList;
 
-
 public class manosPartidaDTO {
-private ArrayList<Carta> mazo;
-private ArrayList<Carta> manoJugador;
-private ArrayList<Carta> manoCompu;
-private int puntosJugador;
-private int puntosCompu;
-private int puntosOcultosCompu;
+
+    private ArrayList<Carta> mazo;
+    private ArrayList<Carta> manoJugador;
+    private ArrayList<Carta> manoCompu;
+    private int puntosJugador;
+    private int puntosCompu;
+    private int puntosOcultosCompu;
 
     public manosPartidaDTO(ArrayList<Carta> mazo, ArrayList<Carta> manoJugador, ArrayList<Carta> manoCompu, int puntosJugador, int puntosCompu, int puntosOcultosCompu) {
         this.mazo = mazo;
@@ -22,6 +22,9 @@ private int puntosOcultosCompu;
         this.puntosJugador = puntosJugador;
         this.puntosCompu = puntosCompu;
         this.puntosOcultosCompu = puntosOcultosCompu;
+    }
+
+    public manosPartidaDTO() {
     }
 
     public ArrayList<Carta> getMazo() {
@@ -71,6 +74,5 @@ private int puntosOcultosCompu;
     public void setPuntosOcultosCompu(int puntosOcultosCompu) {
         this.puntosOcultosCompu = puntosOcultosCompu;
     }
-
 
 }
