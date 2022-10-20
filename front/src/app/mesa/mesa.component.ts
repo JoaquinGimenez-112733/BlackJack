@@ -29,17 +29,20 @@ export class MesaComponent implements OnInit {
   constructor(private auth: AuthService, private mazoService: MazoService) {}
 
   ngOnInit(): void {
-    const manos = this.auth.getManos();
-
-    if (manos) {
-      this.flagNuevaPartida = true;
-      this.mazo = manos?.mazo;
-      this.puntosJugador = manos?.puntosJugador;
-      this.puntosCompu = manos?.puntosCompu;
-      this.puntoOcultoCompu = manos?.puntoOcultoCompu;
-      this.manoJugador = manos?.manoJugador;
-      this.manoCompu = manos?.manoCompu;
-    }
+    this.auth.getPartidaEnCurso().subscribe({
+      next: (cartas: any) => {
+        this.flagNuevaPartida = true;
+        this.mazo = cartas?.mazo; //mazo nuevo
+        this.puntosCompu = cartas?.puntosCompu;
+        this.puntosJugador = cartas?.puntosJugador;
+        this.puntoOcultoCompu = cartas?.puntoOcultoCompu;
+        this.manoCompu = cartas?.manoCompu;
+        this.manoJugador = cartas?.manoJugador;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   cerrarNotificacion() {
@@ -105,56 +108,49 @@ export class MesaComponent implements OnInit {
   }
 
   pasar() {
-    this.manoCompu[1].orden = 99;
-    this.puntosCompu += this.puntoOcultoCompu;
-    //como regla de la casa, la compu saca cartas hasta obtener 17 puntos o más
-    while (this.puntosCompu < 17) {
-      this.carta = this.mazo[0];
-      //el ás puede valer 1 o 11 puntos, dependiendo de nuestro puntaje acumulado
-
-      //this.puntosCompu = this.puntosCompu + this.carta.valor;
-      this.manoCompu.push(this.carta);
-
-      let as = this.manoCompu.find((o) => o.numero === 'A');
-      this.puntosCompu = 0;
-      this.sumarPuntosCompu();
-      if (as && this.puntosCompu < 12) {
-        this.puntosCompu += 10;
-      }
-
-      this.mazo.splice(0, 1);
-      if (this.puntosCompu > 21) {
-        this.textoAlerta = 'Ganaste!';
-        this.tipoAlerta = 'success';
-        this.showAlerta();
-        this.flagNuevaPartida = false;
-      }
+    if (this.puntosCompu > 21) {
+      this.textoAlerta = 'Ganaste!';
+      this.tipoAlerta = 'success';
+      this.showAlerta();
+      this.flagNuevaPartida = false;
     }
 
-    if (this.flagNuevaPartida != false) {
-      if (
-        (this.puntosJugador > this.puntosCompu && this.puntosJugador <= 21) ||
-        this.puntosCompu > 21
-      ) {
-        this.textoAlerta = 'Ganaste!';
-        this.tipoAlerta = 'success';
-        this.showAlerta();
-        this.flagNuevaPartida = false;
-      } else if (
-        (this.puntosCompu > this.puntosJugador && this.puntosCompu <= 21) ||
-        this.puntosJugador > 21
-      ) {
-        this.textoAlerta = 'Perdiste!';
-        this.tipoAlerta = 'danger';
-        this.showAlerta();
-        this.flagNuevaPartida = false;
-      } else if (this.puntosCompu == this.puntosJugador) {
-        this.textoAlerta = 'Empate!';
-        this.tipoAlerta = 'warning';
-        this.showAlerta();
-        this.flagNuevaPartida = false;
-      }
-    }
+    this.mazoService.plantarse().subscribe({
+      next: (cartas: any) => {
+        this.mazo = cartas?.mazo; //mazo nuevo
+        this.puntosCompu = cartas?.puntosCompu;
+        this.puntosJugador = cartas?.puntosJugador;
+        this.puntoOcultoCompu = cartas?.puntoOcultoCompu;
+        this.manoCompu = cartas?.manoCompu;
+        this.manoJugador = cartas?.manoJugador;
+
+        if (this.flagNuevaPartida != false) {
+          if (
+            (this.puntosJugador > this.puntosCompu &&
+              this.puntosJugador <= 21) ||
+            this.puntosCompu > 21
+          ) {
+            this.textoAlerta = 'Ganaste!';
+            this.tipoAlerta = 'success';
+            this.showAlerta();
+            this.flagNuevaPartida = false;
+          } else if (
+            (this.puntosCompu > this.puntosJugador && this.puntosCompu <= 21) ||
+            this.puntosJugador > 21
+          ) {
+            this.textoAlerta = 'Perdiste!';
+            this.tipoAlerta = 'danger';
+            this.showAlerta();
+            this.flagNuevaPartida = false;
+          } else if (this.puntosCompu == this.puntosJugador) {
+            this.textoAlerta = 'Empate!';
+            this.tipoAlerta = 'warning';
+            this.showAlerta();
+            this.flagNuevaPartida = false;
+          }
+        }
+      },
+    });
   }
 
   sumarPuntos() {
@@ -169,5 +165,8 @@ export class MesaComponent implements OnInit {
     this.manoCompu.forEach((element) => {
       this.puntosCompu += element.valor;
     });
+  }
+  logout() {
+    this.auth.logout();
   }
 }

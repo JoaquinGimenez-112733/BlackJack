@@ -6,24 +6,33 @@ import { Carta } from '../interfaces/carta';
   providedIn: 'root',
 })
 export class MazoService {
-  private apiURL = 'http://localhost:8080/mazo';
+  private apiURL = 'http://localhost:8080';
   constructor(private _http: HttpClient) {}
 
   nuevoMazo(): Observable<any> {
-    const headers = {
-      'content-type': 'application/json charset=utf-8',
-      'x-auth-token': localStorage.getItem('token') || '',
-    };
-    return this._http.get<any>(this.apiURL, { headers: headers });
+    return this._http.get<any>(this.apiURL + '/mazo', {
+      headers: {
+        'content-type': 'application/json charset=utf-8',
+        Authorization: `${localStorage.getItem('token')}`,
+      },
+    });
   }
 
   pedirCarta(): Observable<any> {
-    const headers = {
-      'content-type': 'application/json charset=utf-8',
-      'x-auth-token': localStorage.getItem('token') || '',
-    };
     return this._http.get<any>(this.apiURL + '/pedir', {
-      headers: headers,
+      headers: {
+        'content-type': 'application/json charset=utf-8',
+        Authorization: `${localStorage.getItem('token')}`,
+      },
+    });
+  }
+
+  plantarse(): Observable<any> {
+    return this._http.get<any>(this.apiURL + '/pasar', {
+      headers: {
+        'content-type': 'application/json charset=utf-8',
+        Authorization: `${localStorage.getItem('token')}`,
+      },
     });
   }
 }

@@ -89,6 +89,22 @@ span {
   width: 50px;
 }
 
+.logout {
+  margin-right: 20px;
+  font-size: large;
+  background-color: #aaa;
+  color: #183153;
+  padding: 1rem;
+  border-radius: 50px;
+  border: none;
+  line-height: 0px;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 50px;
+  right: 50px;
+}
+
 .mesa {
   display: flex;
   flex-direction: row;
