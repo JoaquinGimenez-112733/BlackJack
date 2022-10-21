@@ -49,10 +49,12 @@ public class BlackJackController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
     public LoginDTO login(@RequestBody Usuario us) {
-        int resp = 0;
+
         userId = 0;
         LoginDTO dto = new LoginDTO("");
         String token = "";
+
+        System.out.println(us);
 
         Usuario userTarget = new Usuario();
         BeanUtils.copyProperties(us, userTarget);
@@ -393,7 +395,7 @@ public class BlackJackController {
     private String abrirConexion() {
         String msj = "";
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "root", "*Q1w2e3");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "claselab4", "123456");
             msj = "Conexion exitosa!";
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -465,4 +467,106 @@ public class BlackJackController {
         }
         return false;
     }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/perdiste")
+    public manosPartidaDTO perdiste(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+
+        Usuario us = getUsuarioFromToken(token);
+        boolean validacion = validarUsuario(us);
+
+        if (!validacion) {
+            return null;
+        }
+
+        puntosCompu += puntosOcultosCompu;
+        puntosOcultosCompu = 0;
+
+        //UPDATEAMOS LA PARTIDA EN BD AL FINALIZAR
+        Gson gson = new Gson();
+        String mazoStrJson = gson.toJson(nuevoMazo);
+        String jugadorStrJson = gson.toJson(manoJugador);
+        String compuStrJson = gson.toJson(manoCompu);
+        String msj = "";
+
+        try {
+            abrirConexion();
+
+            String sql = "UPDATE partidas SET puntajeUsuario = ?, puntajeCompu = ?, puntajeOcultoCompu = ?, mazo = ?, manoUsuario = ?, manoCompu = ?, idUsuario = ?, finalizada = ? WHERE id = ?";
+            PreparedStatement stLose = conn.prepareStatement(sql);
+
+            stLose.setInt(1, puntosJugador);
+            stLose.setInt(2, puntosCompu);
+            stLose.setInt(3, puntosOcultosCompu);
+            stLose.setString(4, mazoStrJson);
+            stLose.setString(5, jugadorStrJson);
+            stLose.setString(6, compuStrJson);
+            stLose.setInt(7, 1);
+            stLose.setBoolean(8, true);
+            stLose.setInt(9, partida_id);
+
+            stLose.executeUpdate();
+            stLose.close();
+
+            msj = "Partida registrado exitosamente";
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            msj = "No se pudo registrar su partida";
+        } finally {
+
+            cerrarConexion();
+        }
+
+        manosPartidaDTO dto = new manosPartidaDTO(nuevoMazo, manoJugador, manoCompu, puntosJugador, puntosCompu, puntosOcultosCompu);
+        return dto;
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/signup")
+    public int signup(@RequestBody Usuario us) {
+        LoginDTO dto = new LoginDTO("");
+        int response = 0;
+        Usuario userTarget = new Usuario();
+        BeanUtils.copyProperties(us, userTarget);
+
+        //VERIFICAMOS QUE EXISTA EN LA BD
+        try {
+            abrirConexion();
+
+            String sql = "SELECT id FROM usuario WHERE usuario = ? AND password = ?;";
+            PreparedStatement st = conn.prepareStatement(sql);
+
+            st.setString(1, userTarget.getUsuario());
+            st.setString(2, userTarget.getPassword());
+
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                response = 400;
+                
+            } else {
+
+                try {
+                    abrirConexion();
+                    String sqlInsert = "INSERT INTO usuario(usuario, password) VALUES(?,?);";
+                    PreparedStatement stInsert = conn.prepareStatement(sqlInsert);
+                    stInsert.setString(1, userTarget.getUsuario());
+                    stInsert.setString(2, userTarget.getPassword());
+
+                    stInsert.execute();
+                    response = 200;
+                    
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            cerrarConexion();
+        }
+        return response;
+    }
+
 }

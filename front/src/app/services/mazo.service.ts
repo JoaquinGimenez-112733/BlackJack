@@ -35,4 +35,13 @@ export class MazoService {
       },
     });
   }
+
+  perdiste(): Observable<any> {
+    return this._http.get<any>(this.apiURL + '/perdiste', {
+      headers: {
+        'content-type': 'application/json charset=utf-8',
+        Authorization: `${localStorage.getItem('token')}`,
+      },
+    });
+  }
 }
