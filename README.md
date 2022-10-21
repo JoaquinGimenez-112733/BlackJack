@@ -1,5 +1,6 @@
-# BlackJack - DABD
 <a name="readme-top"></a>
+# BlackJack - DABD
+
 ## Integrantes:
 * 113231 - Barrera Dominici, Juan Cruz 
 * 112733 - Gimenez, Joaquin
@@ -30,10 +31,10 @@
 </details>
 
 
-
+<a name="about-the-project"></a>
 <!-- ABOUT THE PROJECT -->
 ## Acerca del proyecto
-<a name="about-the-project"></a>
+
 
 Se trata de un simple blackjack, modalidad de un solo jugador, contra un NPC que hace las veces de crupier.
 Este juego tiene como características, empezar una nueva partida, pedir cartas, pasar y resolver partidas, todo persistiendo los datos y posibilitando con esto, retomar partidas sin finalizar.
@@ -42,9 +43,9 @@ El proyecto forma parte de la materia DABD de la UTN-FRC (Cordoba - Argentina), 
 <p align="right">(<a href="#readme-top">volver arriba</a>)</p>
 
 
-
-### Construido con
 <a name="built-with"></a>
+### Construido con
+
 
 * [![Angular][Angular.io]][Angular-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
@@ -58,12 +59,13 @@ El proyecto forma parte de la materia DABD de la UTN-FRC (Cordoba - Argentina), 
 
 
 <!-- GETTING STARTED -->
-## Empecemos
 <a name="getting-started"></a>
-A continuación detallaremos como inicializar el proyecto de manera local, en futuras entregas puede que lo hostiemos para evitarles molestias.
+## Empecemos
 
-### Pre-Requisitos
+A continuación detallaremos como inicializar el proyecto de manera local, en futuras entregas puede que lo hostiemos para evitarles molestias.
 <a name="prerequisites"></a>
+### Pre-Requisitos
+
 Esta es una lista de frameworks que deberá tener instalados para inicializar el proyecto Angular.
 
 **Windows**
@@ -126,8 +128,9 @@ Esta es una lista de frameworks que deberá tener instalados para inicializar el
 
 
 <!-- CONTACT -->
-## Contactos
 <a name="contacts"></a>
+## Contactos
+
 
 Gonzalo, Nicolas - 112962@tecnicatura.frc.utn.edu.ar
 Barrera Dominici, Juan Cruz - 113231@tecnicatura.frc.utn.edu.ar
