@@ -25,7 +25,7 @@
         <li><a href="#installation">Instalación</a></li>        
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#usage">Uso</a></li>
     <li><a href="#contact">Contactos</a></li>
 
   </ol>
