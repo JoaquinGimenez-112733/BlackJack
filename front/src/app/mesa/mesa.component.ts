@@ -31,13 +31,21 @@ export class MesaComponent implements OnInit {
   ngOnInit(): void {
     this.auth.getPartidaEnCurso().subscribe({
       next: (cartas: any) => {
-        this.flagNuevaPartida = true;
+
         this.mazo = cartas?.mazo; //mazo nuevo
         this.puntosCompu = cartas?.puntosCompu;
         this.puntosJugador = cartas?.puntosJugador;
         this.puntoOcultoCompu = cartas?.puntoOcultoCompu;
         this.manoCompu = cartas?.manoCompu;
         this.manoJugador = cartas?.manoJugador;
+
+        if(this.puntosJugador == 0){
+          console.log("false")
+        this.flagNuevaPartida = false;
+        }else{
+          console.log("true")
+          this.flagNuevaPartida = true;
+        }
       },
       error: (err) => {
         console.log(err);
@@ -97,7 +105,24 @@ export class MesaComponent implements OnInit {
         this.puntoOcultoCompu = cartas?.puntoOcultoCompu;
         this.manoCompu = cartas?.manoCompu;
         this.manoJugador = cartas?.manoJugador;
+        
         if (this.puntosJugador > 21) {
+          
+          this.mazoService.perdiste().subscribe({
+            next: (cartas: any)=>{
+              this.mazo = cartas?.mazo; //mazo nuevo
+              this.puntosCompu = cartas?.puntosCompu;
+              this.puntosJugador = cartas?.puntosJugador;
+              this.puntoOcultoCompu = cartas?.puntoOcultoCompu;
+              this.manoCompu = cartas?.manoCompu;
+              this.manoJugador = cartas?.manoJugador;
+      
+      
+              this.manoCompu[1].orden = 99;
+              this.flagNuevaPartida = false;
+              //this.puntosCompu = this.puntosCompu + this.puntoOcultoCompu;
+            }
+          })
           this.textoAlerta = 'Perdiste';
           this.tipoAlerta = 'danger';
           this.showAlerta();
