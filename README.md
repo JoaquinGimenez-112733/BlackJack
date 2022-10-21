@@ -133,8 +133,10 @@ Esta es una lista de frameworks que deberá tener instalados para inicializar el
 
 
 Gonzalo, Nicolas - 112962@tecnicatura.frc.utn.edu.ar
+
 Barrera Dominici, Juan Cruz - 113231@tecnicatura.frc.utn.edu.ar
- Gimenez, Joaquin - 112733@tecnicatura.frc.utn.edu.ar
+
+Gimenez, Joaquin - 112733@tecnicatura.frc.utn.edu.ar
 
 
 <p align="right">(<a href="#readme-top">volver arriba</a>)</p>
