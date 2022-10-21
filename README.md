@@ -22,9 +22,10 @@
       <a href="#getting-started">Empecemos</a>
       <ul>
         <li><a href="#prerequisites">Pre-Requisitos</a></li>
-        <li><a href="#installation">Instalación</a></li>
+        <li><a href="#installation">Instalación</a></li>        
       </ul>
     </li>
+    <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contactos</a></li>
 
   </ol>
@@ -123,7 +124,34 @@ Esta es una lista de frameworks que deberá tener instalados para inicializar el
     conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "claselab4", "123456");   
    ```
       En el segundo y tercer argumento, donde dice ```claselab4``` y ```123456``` insertaremos nuestro usuario y password de nuestra instancia de MySQL.
+      
+  3. Instalar las dependencias, tanto para el proyecto Angular, como para el proyecto maven.
+      3.1. Desde el directorio del proyecto **Angular**, instalar las dependencias:
+```sh   	
+    npm install    
+```
+          
 
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
+
+
+
+<!-- USAGE EXAMPLES -->
+<a name="usage"></a>
+## Uso
+
+Para poder usarlo, se debe abrir el proyecto maven desde algun IDE como ```netbeans```, y en la terminal ejecutar 
+
+```sh   	
+    mvn spring-boot:run   
+```
+
+Esto correra el BACK-END en el ```localhost:8080```.
+Luego desde el directorio de nuestro proyecto Angular, ejecutar con:
+```sh   	
+    ng serve   
+```
+Se abrira en una pestaña de su navegador por defecto el proyecto en ```localhost:4200``` y ya desde ahi podra logearse o crear un usuario nuevo.
 <p align="right">(<a href="#readme-top">volver arriba</a>)</p>
 
 
