@@ -395,7 +395,7 @@ public class BlackJackController {
     private String abrirConexion() {
         String msj = "";
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "claselab4", "123456");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "root", "nikolas06");
             msj = "Conexion exitosa!";
         } catch (SQLException ex) {
             ex.printStackTrace();

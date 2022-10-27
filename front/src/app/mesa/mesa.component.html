@@ -3,7 +3,7 @@
     <div class="mano-computadora" id="compu" *ngFor="let mano of jugadores">
       <div class="jugador">
         <div>COMPU</div>
-        <div *ngIf="!flagNuevaPartida">Puntos: {{ puntosCompu }}</div>
+       <div>Puntos: {{ puntosCompu }}</div>
       </div>
       <div *ngFor="let cj of manoCompu; let i = index" [attr.data-index]="i">
         <app-carta
