@@ -18,20 +18,3 @@ CREATE TABLE partidas (
 	,finalizada bool
 	)
 
-INSERT INTO partidas (
-	puntajeUsuario
-	,puntajeCompu
-	,mazo
-	,manoUsuario
-	,manoCompu
-	,idUsuario
-	)
-VALUES (
-	13
-	,19
-	,'[{"numero":"7","palo":"spades","valor":"7","orden":"5"},{"numero":"J","palo":"hearts","valor":"10","orden":"6"}]'
-	,'[{"numero":"7","palo":"spades","valor":"7","orden":"5"},{"numero":"J","palo":"hearts","valor":"10","orden":"6"}]'
-	,'[{"numero":"7","palo":"spades","valor":"7","orden":"5"},{"numero":"J","palo":"hearts","valor":"10","orden":"6"}]'
-	,1
-	)
-
