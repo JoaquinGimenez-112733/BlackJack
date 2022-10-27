@@ -50,7 +50,9 @@
     >
       <i class="fa-solid fa-plus"></i>
     </button>
-    <button class="boton plantarse" (click)="pasar()">
+    <button 
+    [disabled]="!flagNuevaPartida"
+    class="boton plantarse" (click)="pasar()">
       <i class="fa fa-stop"></i>
     </button>
   </div>

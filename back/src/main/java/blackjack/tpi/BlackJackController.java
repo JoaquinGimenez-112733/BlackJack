@@ -194,7 +194,7 @@ public class BlackJackController {
     public manosPartidaDTO pedirCarta(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         Usuario us = getUsuarioFromToken(token);
         boolean validacion = validarUsuario(us);
-
+        boolean existeA = false;
         if (!validacion) {
             return null;
         }
@@ -207,7 +207,13 @@ public class BlackJackController {
         for (Carta cj : manoJugador) {
             puntosJugador += cj.getValor();
         }
-        if (manoJugador.contains('A') && puntosJugador < 12) {
+        for (Carta cj : manoJugador) {
+
+            if (carta.getNumero().equals(this.A)) {
+                existeA = true;
+            }
+        }
+        if (existeA == true && puntosJugador < 12) {
             puntosJugador += 10;
         }
 
@@ -254,7 +260,7 @@ public class BlackJackController {
     public manosPartidaDTO pasar(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         Usuario us = getUsuarioFromToken(token);
         boolean validacion = validarUsuario(us);
-
+        boolean existeA = false;
         if (!validacion) {
             return null;
         }
@@ -271,7 +277,13 @@ public class BlackJackController {
             for (Carta cc : manoCompu) {
                 puntosCompu += cc.getValor();
             }
-            if (manoCompu.contains('A') && puntosCompu < 12) {
+            for (Carta cj : manoCompu) {
+
+                if (carta.getNumero().equals(this.A)) {
+                    existeA = true;
+                }
+            }
+            if (existeA == true && puntosCompu < 12) {
                 puntosCompu += 10;
             }
 
@@ -395,7 +407,7 @@ public class BlackJackController {
     private String abrirConexion() {
         String msj = "";
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "claselab4", "123456");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "root", "nikolas06");
             msj = "Conexion exitosa!";
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -544,7 +556,7 @@ public class BlackJackController {
 
             if (rs.next()) {
                 response = 400;
-                
+
             } else {
 
                 try {
@@ -556,7 +568,7 @@ public class BlackJackController {
 
                     stInsert.execute();
                     response = 200;
-                    
+
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
