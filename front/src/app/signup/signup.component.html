@@ -3,7 +3,7 @@
     <div class="user_card">
       <div class="d-flex justify-content-center form_container">
         <form [formGroup]="formulario">
-          <div class="input-group mb-3">
+          <div class="input-group">
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
             </div>
@@ -14,7 +14,13 @@
               placeholder="usuario"
             />
           </div>
-          <div class="input-group mb-2">
+          <small
+            class="text-danger mb-3"
+            *ngIf="formulario.get('usuario')?.hasError('usuarioExists')"
+          >
+            Ya existe este usuario
+          </small>
+          <div class="input-group mb-2 mt-2">
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-key"></i></span>
             </div>
@@ -28,20 +34,13 @@
           </div>
           <div class="d-flex justify-content-center mt-3 login_container">
             <button
-              type="button"
-              name="button"
-              class="btn login_btn"
-              (click)="login()"
-            >
-              Login
-            </button>
-            <button
+              [disabled]="formulario.invalid"
               type="button"
               name="button"
               class="btn login_btn ml-3"
-              (click)="goToRegistrar()"
+              (click)="registrar()"
             >
-              Registrarse
+              Registrar Jugador
             </button>
           </div>
         </form>

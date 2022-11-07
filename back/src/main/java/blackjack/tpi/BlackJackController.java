@@ -2,19 +2,24 @@ package blackjack.tpi;
 
 import java.util.ArrayList;
 import java.sql.*;
+
 import Models.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.jsonwebtoken.Claims;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Date;
 import java.util.Set;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
 import java.util.HashSet;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -407,7 +412,7 @@ public class BlackJackController {
     private String abrirConexion() {
         String msj = "";
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "root", "nikolas06");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "root", "123456");
             msj = "Conexion exitosa!";
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -478,6 +483,32 @@ public class BlackJackController {
             cerrarConexion();
         }
         return false;
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "usuarioExists")
+    private ResponseEntity<Boolean> usuarioExists(@RequestParam String username) {
+        try {
+            abrirConexion();
+
+            String sql = "SELECT id FROM usuario WHERE usuario = ?;";
+            PreparedStatement st = conn.prepareStatement(sql);
+
+            st.setString(1, username);
+
+
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                return ResponseEntity.status(200).body(true);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        } finally {
+            cerrarConexion();
+        }
+        return ResponseEntity.status(400).body(null);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")

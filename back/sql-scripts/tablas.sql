@@ -14,7 +14,7 @@ CREATE TABLE partidas (
 	,mazo JSON NOT NULL
 	,manoUsuario JSON NOT NULL
 	,manoCompu JSON NOT NULL
-	,idUsuario INT REFERENCES usuarios(id)
+	,idUsuario INT REFERENCES usuario(id)
 	,finalizada bool
 	)
 

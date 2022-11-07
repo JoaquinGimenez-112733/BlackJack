@@ -32,4 +32,16 @@ export class AuthService {
     localStorage.removeItem('token');
     window.location.reload();
   }
+
+  public signup(usuario: string, contraseña: string): Observable<any> {
+    return this._http.post('http://localhost:8080/signup', {
+      usuario,
+      password: contraseña,
+    });
+  }
+  public userCheck(usuario: string): Observable<any> {
+    return this._http.get(
+      `http://localhost:8080/usuarioExists?username=${usuario}`
+    );
+  }
 }
