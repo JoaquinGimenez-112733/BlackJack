@@ -56,4 +56,7 @@ export class SignupComponent implements OnInit {
         },
       });
   }
+  cancelar() {
+    this.router.navigateByUrl('/');
+  }
 }

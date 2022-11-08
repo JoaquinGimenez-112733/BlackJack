@@ -13,9 +13,10 @@ import { MazoService } from './services/mazo.service';
 import { CartaComponent } from './carta/carta.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { ReportesComponent } from './reportes/reportes.component';
 
 @NgModule({
-  declarations: [AppComponent, MesaComponent, CartaComponent, LoginComponent, SignupComponent],
+  declarations: [AppComponent, MesaComponent, CartaComponent, LoginComponent, SignupComponent, ReportesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

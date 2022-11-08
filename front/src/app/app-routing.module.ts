@@ -4,6 +4,7 @@ import { MesaComponent } from './mesa/mesa.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
+import { ReportesComponent } from './reportes/reportes.component';
 
 const routes: Routes = [
   { path: '', component: MesaComponent, canActivate: [AuthGuardService] },
@@ -14,6 +15,11 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent,
+  },
+  {
+    path: 'reportes',
+    component: ReportesComponent,
+    canActivate: [AuthGuardService],
   },
   { path: '**', redirectTo: '' },
 ];
