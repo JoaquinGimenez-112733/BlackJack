@@ -1,4 +1,4 @@
-
+CREATE DATABASE blackjack
 
 CREATE TABLE usuario (
 	id INT auto_increment PRIMARY KEY
@@ -15,6 +15,10 @@ CREATE TABLE partidas (
 	,manoUsuario JSON NOT NULL
 	,manoCompu JSON NOT NULL
 	,idUsuario INT REFERENCES usuario(id)
+	,fechaInicio TIMESTAMP DEFAULT CURRENT_TIME
+	,win bool
+	,lose bool
+	,tie bool
 	,finalizada bool
 	)
 
