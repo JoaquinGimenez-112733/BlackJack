@@ -574,6 +574,7 @@ public class BlackJackController {
             stLose.setBoolean(11, true);
             stLose.setInt(12, partida_id);
 
+
             stLose.executeUpdate();
             stLose.close();
 

@@ -13,6 +13,8 @@
 //
 //    //estadisticas globales
 //
+
+
 //    private float porcentajeW;
 //    private float porcentajeL;
 //    private float porcentajeT;
