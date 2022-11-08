@@ -59,7 +59,7 @@ public class BlackJackController {
         LoginDTO dto = new LoginDTO("");
         String token = "";
 
-        System.out.println(us);
+
 
         Usuario userTarget = new Usuario();
         BeanUtils.copyProperties(us, userTarget);
@@ -174,7 +174,7 @@ public class BlackJackController {
             st.setString(4, mazoStrJson);
             st.setString(5, jugadorStrJson);
             st.setString(6, compuStrJson);
-            st.setInt(7, 1);
+            st.setInt(7, userId);
             st.setBoolean(8, false);
 
             st.executeUpdate();
@@ -182,7 +182,7 @@ public class BlackJackController {
             rs.next();
             partida_id = rs.getInt(1);
             msj = "Partida registrado exitosamente";
-            System.out.println(partida_id);
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             msj = "No se pudo registrar su partida";
@@ -241,14 +241,14 @@ public class BlackJackController {
             st.setString(4, mazoStrJson);
             st.setString(5, jugadorStrJson);
             st.setString(6, compuStrJson);
-            st.setInt(7, 1);
+            st.setInt(7, userId);
             st.setBoolean(8, false);
             st.setInt(9, partida_id);
 
             st.executeUpdate();
 
             msj = "Partida registrado exitosamente";
-            System.out.println(partida_id);
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             msj = "No se pudo registrar su partida";
@@ -298,12 +298,29 @@ public class BlackJackController {
         String mazoStrJson = gson.toJson(nuevoMazo);
         String jugadorStrJson = gson.toJson(manoJugador);
         String compuStrJson = gson.toJson(manoCompu);
+
+        boolean win = false;
+        boolean lose  = false;
+        boolean tie = false;
         String msj = "";
 
+        if(puntosCompu>puntosJugador && puntosCompu<=21){
+            win = false;
+            lose = true;
+            tie = false;
+        }else if(puntosCompu<puntosJugador || puntosCompu>21){
+            win = true;
+            lose = false;
+            tie = false;
+        }else if(puntosCompu==puntosJugador){
+            win = false;
+            lose = false;
+            tie = true;
+        }
         try {
             abrirConexion();
 
-            String sql = "UPDATE partidas SET puntajeUsuario = ?, puntajeCompu = ?, puntajeOcultoCompu = ?, mazo = ?, manoUsuario = ?, manoCompu = ?, idUsuario = ?, finalizada = ? WHERE id = ?";
+            String sql = "UPDATE partidas SET puntajeUsuario = ?, puntajeCompu = ?, puntajeOcultoCompu = ?, mazo = ?, manoUsuario = ?, manoCompu = ?, idUsuario = ?, win = ?, lose = ?, tie = ?, finalizada = ? WHERE id = ?";
             PreparedStatement st = conn.prepareStatement(sql);
 
             st.setInt(1, puntosJugador);
@@ -312,14 +329,17 @@ public class BlackJackController {
             st.setString(4, mazoStrJson);
             st.setString(5, jugadorStrJson);
             st.setString(6, compuStrJson);
-            st.setInt(7, 1);
-            st.setBoolean(8, true);
-            st.setInt(9, partida_id);
+            st.setInt(7, userId);
+            st.setBoolean(8, win);
+            st.setBoolean(9, lose);
+            st.setBoolean(10, tie);
+            st.setBoolean(11, true);
+            st.setInt(12, partida_id);
 
             st.executeUpdate();
 
             msj = "Partida registrado exitosamente";
-            System.out.println(partida_id);
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             msj = "No se pudo registrar su partida";
@@ -484,6 +504,7 @@ public class BlackJackController {
         }
         return false;
     }
+
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value = "usuarioExists")
     private ResponseEntity<Boolean> usuarioExists(@RequestParam String username) {
@@ -531,11 +552,13 @@ public class BlackJackController {
         String jugadorStrJson = gson.toJson(manoJugador);
         String compuStrJson = gson.toJson(manoCompu);
         String msj = "";
-
+        boolean win = false;
+        boolean lose  = true;
+        boolean tie = false;
         try {
             abrirConexion();
 
-            String sql = "UPDATE partidas SET puntajeUsuario = ?, puntajeCompu = ?, puntajeOcultoCompu = ?, mazo = ?, manoUsuario = ?, manoCompu = ?, idUsuario = ?, finalizada = ? WHERE id = ?";
+            String sql = "UPDATE partidas SET puntajeUsuario = ?, puntajeCompu = ?, puntajeOcultoCompu = ?, mazo = ?, manoUsuario = ?, manoCompu = ?, idUsuario = ?, win = ?, lose = ?, tie = ?, finalizada = ? WHERE id = ?";
             PreparedStatement stLose = conn.prepareStatement(sql);
 
             stLose.setInt(1, puntosJugador);
@@ -544,9 +567,12 @@ public class BlackJackController {
             stLose.setString(4, mazoStrJson);
             stLose.setString(5, jugadorStrJson);
             stLose.setString(6, compuStrJson);
-            stLose.setInt(7, 1);
-            stLose.setBoolean(8, true);
-            stLose.setInt(9, partida_id);
+            stLose.setInt(7, userId);
+            stLose.setBoolean(8, win);
+            stLose.setBoolean(9, lose);
+            stLose.setBoolean(10, tie);
+            stLose.setBoolean(11, true);
+            stLose.setInt(12, partida_id);
 
             stLose.executeUpdate();
             stLose.close();
@@ -609,6 +635,7 @@ public class BlackJackController {
         } finally {
             cerrarConexion();
         }
+
         return response;
     }
 
