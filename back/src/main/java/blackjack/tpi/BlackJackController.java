@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.sql.*;
 
 import Models.*;
+import Models.Reportes.Rachas;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.jsonwebtoken.Claims;
@@ -58,7 +59,6 @@ public class BlackJackController {
         userId = 0;
         LoginDTO dto = new LoginDTO("");
         String token = "";
-
 
 
         Usuario userTarget = new Usuario();
@@ -300,19 +300,19 @@ public class BlackJackController {
         String compuStrJson = gson.toJson(manoCompu);
 
         boolean win = false;
-        boolean lose  = false;
+        boolean lose = false;
         boolean tie = false;
         String msj = "";
 
-        if(puntosCompu>puntosJugador && puntosCompu<=21){
+        if (puntosCompu > puntosJugador && puntosCompu <= 21) {
             win = false;
             lose = true;
             tie = false;
-        }else if(puntosCompu<puntosJugador || puntosCompu>21){
+        } else if (puntosCompu < puntosJugador || puntosCompu > 21) {
             win = true;
             lose = false;
             tie = false;
-        }else if(puntosCompu==puntosJugador){
+        } else if (puntosCompu == puntosJugador) {
             win = false;
             lose = false;
             tie = true;
@@ -553,7 +553,7 @@ public class BlackJackController {
         String compuStrJson = gson.toJson(manoCompu);
         String msj = "";
         boolean win = false;
-        boolean lose  = true;
+        boolean lose = true;
         boolean tie = false;
         try {
             abrirConexion();
@@ -639,5 +639,199 @@ public class BlackJackController {
 
         return response;
     }
+    //REPORTES
 
+
+
+    @CrossOrigin(origins ="http://localhost:4200")
+    @GetMapping(value ="/reportesIndividuales")
+    public ResponseEntity<EstadisticasDTO> getResultadosIndividuales()
+    {
+        try {
+            System.out.println(userId);
+            abrirConexion();
+            Rachas rachaV = new Rachas(0,0);
+            Rachas rachaD = new Rachas(0,0);;
+            Rachas bj = new Rachas(0,0);
+            Rachas partidasJugadas = new Rachas(0,0);
+            //Rachas de victorias
+            String sql = " SELECT idUsuario\n" +
+                    "\t,MAX(cnt) AS valor\n" +
+                    "\t,CASE \n" +
+                    "\t\tWHEN MAX(cnt) >= 0\n" +
+                    "\t\t\tAND MAX(cnt) <= 3\n" +
+                    "\t\t\tTHEN 1\n" +
+                    "\t\tWHEN MAX(cnt) > 3\n" +
+                    "\t\t\tAND MAX(cnt) <= 5\n" +
+                    "\t\t\tTHEN 2\n" +
+                    "\t\tWHEN MAX(cnt) > 5\n" +
+                    "\t\t\tAND MAX(cnt) <= 7\n" +
+                    "\t\t\tTHEN 3\n" +
+                    "\t\tWHEN MAX(cnt) > 7\n" +
+                    "\t\t\tAND MAX(cnt) <= 10\n" +
+                    "\t\t\tTHEN 4\n" +
+                    "\t\tEND AS tier\n" +
+                    "FROM (\n" +
+                    "\tSELECT idUsuario\n" +
+                    "\t\t,COUNT(*) AS cnt\n" +
+                    "\tFROM (\n" +
+                    "\t\tSELECT idUsuario\n" +
+                    "\t\t\t,id\n" +
+                    "\t\t\t,win\n" +
+                    "\t\t\t,SUM(CASE \n" +
+                    "\t\t\t\t\tWHEN win <> true\n" +
+                    "\t\t\t\t\t\tTHEN 1\n" +
+                    "\t\t\t\t\tEND) OVER (\n" +
+                    "\t\t\t\tPARTITION BY idUsuario ORDER BY id ROWS UNBOUNDED PRECEDING\n" +
+                    "\t\t\t\t) AS DUMMY\n" +
+                    "\t\tFROM partidas\n" +
+                    "\t\t) dt\n" +
+                    "\tWHERE win = true\n" +
+                    "\t\tAND idusuario = ?\n" +
+                    "\tGROUP BY idUsuario\n" +
+                    "\t\t,DUMMY\n" +
+                    "\t) dt\n" +
+                    "GROUP BY idUsuario";
+
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1,userId);
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()){
+                int valor1 = rs.getInt(2);
+                int tier1 = rs.getInt(3);
+
+               rachaV = new Rachas(valor1,tier1);
+            }
+        //Rachas de derrotas
+            String sql2 = "SELECT idUsuario\n" +
+                    "\t,MAX(cnt) AS valor\n" +
+                    "\t,CASE \n" +
+                    "\t\tWHEN MAX(cnt) >= 0\n" +
+                    "\t\t\tAND MAX(cnt) <= 3\n" +
+                    "\t\t\tTHEN 1\n" +
+                    "\t\tWHEN MAX(cnt) > 3\n" +
+                    "\t\t\tAND MAX(cnt) <= 5\n" +
+                    "\t\t\tTHEN 2\n" +
+                    "\t\tWHEN MAX(cnt) > 5\n" +
+                    "\t\t\tAND MAX(cnt) <= 7\n" +
+                    "\t\t\tTHEN 3\n" +
+                    "\t\tWHEN MAX(cnt) > 7\n" +
+                    "\t\t\tAND MAX(cnt) <= 10\n" +
+                    "\t\t\tTHEN 4\n" +
+                    "\t\tEND AS tier\n" +
+                    "FROM (\n" +
+                    "\tSELECT idUsuario\n" +
+                    "\t\t,COUNT(*) AS cnt\n" +
+                    "\tFROM (\n" +
+                    "\t\tSELECT idUsuario\n" +
+                    "\t\t\t,id\n" +
+                    "\t\t\t,lose\n" +
+                    "\t\t\t,SUM(CASE \n" +
+                    "\t\t\t\t\tWHEN lose <> true\n" +
+                    "\t\t\t\t\t\tTHEN 1\n" +
+                    "\t\t\t\t\tEND) OVER (\n" +
+                    "\t\t\t\tPARTITION BY idUsuario ORDER BY id ROWS UNBOUNDED PRECEDING\n" +
+                    "\t\t\t\t) AS DUMMY\n" +
+                    "\t\tFROM partidas\n" +
+                    "\t\t) dt\n" +
+                    "\tWHERE lose = true\n" +
+                    "\t\tAND idusuario = ?\n" +
+                    "\tGROUP BY idUsuario\n" +
+                    "\t\t,DUMMY\n" +
+                    "\t) dt\n" +
+                    "GROUP BY idUsuario";
+
+            PreparedStatement st2 = conn.prepareStatement(sql2);
+            st2.setInt(1,userId);
+
+            ResultSet rs2 = st.executeQuery();
+
+            while(rs2.next()){
+                int valor = rs2.getInt(2);
+                int tier = rs2.getInt(3);
+
+                rachaD = new Rachas(valor,tier);
+            }
+
+            //Cantidad de BlackJacks
+
+            String sql3 = "SELECT count(*)\n" +
+                    "\t,CASE \n" +
+                    "\t\tWHEN count(*) >= 0\n" +
+                    "\t\t\tAND count(*) <= 10\n" +
+                    "\t\t\tTHEN 1\n" +
+                    "\t\tWHEN count(*) > 10\n" +
+                    "\t\t\tAND count(*) <= 25\n" +
+                    "\t\t\tTHEN 2\n" +
+                    "\t\tWHEN count(*) > 25\n" +
+                    "\t\t\tAND count(*) <= 50\n" +
+                    "\t\t\tTHEN 3\n" +
+                    "\t\tWHEN count(*) > 50\n" +
+                    "\t\t\tAND count(*) <= 100\n" +
+                    "\t\t\tTHEN 4\n" +
+                    "\t\tEND AS tier\n" +
+                    "\n" +
+                    "FROM partidas p\n" +
+                    "WHERE p.finalizada = true\n" +
+                    "\tAND p.puntajeUsuario = 21\n" +
+                    "\tAND p.idUsuario = ?";
+
+            PreparedStatement st3 = conn.prepareStatement(sql3);
+            st3.setInt(1,userId);
+
+            ResultSet rs3 = st3.executeQuery();
+
+            while(rs3.next()){
+                int valor = rs3.getInt(1);
+                int tier = rs3.getInt(2);
+
+                bj = new Rachas(valor,tier);
+            }
+
+            //Cantidad de Partidas Jugadas
+
+            String sql4 = "SELECT count(*)\n" +
+                    "\t,CASE \n" +
+                    "\t\tWHEN count(*) >= 0\n" +
+                    "\t\t\tAND count(*) <= 10\n" +
+                    "\t\t\tTHEN 1\n" +
+                    "\t\tWHEN count(*) > 10\n" +
+                    "\t\t\tAND count(*) <= 25\n" +
+                    "\t\t\tTHEN 2\n" +
+                    "\t\tWHEN count(*) > 25\n" +
+                    "\t\t\tAND count(*) <= 50\n" +
+                    "\t\t\tTHEN 3\n" +
+                    "\t\tWHEN count(*) > 50\n" +
+                    "\t\t\tAND count(*) <= 100\n" +
+                    "\t\t\tTHEN 4\n" +
+                    "\t\tEND AS tier\n" +
+                    "FROM partidas p\n" +
+                    "WHERE p.finalizada = true\n" +
+                    "\tAND p.idUsuario = ?\t";
+
+            PreparedStatement st4 = conn.prepareStatement(sql4);
+            st4.setInt(1,userId);
+
+            ResultSet rs4 = st4.executeQuery();
+
+            while(rs4.next()){
+                int valor = rs4.getInt(1);
+                int tier = rs4.getInt(2);
+
+                partidasJugadas = new Rachas(valor,tier);
+            }
+
+            EstadisticasDTO dto = new EstadisticasDTO(rachaV,rachaD,bj,partidasJugadas);
+            return ResponseEntity.status(200).body(dto);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return ResponseEntity.status(200).body(null);
+        } finally {
+            cerrarConexion();
+        }
+
+    }
 }
