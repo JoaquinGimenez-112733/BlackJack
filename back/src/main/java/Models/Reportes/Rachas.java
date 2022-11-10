@@ -4,9 +4,12 @@ public class Rachas {
     private int valor;
     private int tier;
 
-    public Rachas(int valor, int tier) {
+    private float porcentaje;
+
+    public Rachas(int valor, int tier, float porcentaje) {
         this.valor = valor;
         this.tier = tier;
+        this.porcentaje = porcentaje;
     }
 
     public int getValor() {
@@ -23,5 +26,13 @@ public class Rachas {
 
     public void setTier(int tier) {
         this.tier = tier;
+    }
+
+    public float getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setPorcentaje(float porcentaje) {
+        this.porcentaje = porcentaje;
     }
 }

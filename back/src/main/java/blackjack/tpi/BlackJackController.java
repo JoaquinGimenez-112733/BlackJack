@@ -642,34 +642,30 @@ public class BlackJackController {
     //REPORTES
 
 
-
-    @CrossOrigin(origins ="http://localhost:4200")
-    @GetMapping(value ="/reportesIndividuales")
-    public ResponseEntity<EstadisticasDTO> getResultadosIndividuales()
-    {
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/reportesIndividuales")
+    public ResponseEntity<EstadisticasDTO> getResultadosIndividuales() {
         try {
             System.out.println(userId);
             abrirConexion();
-            Rachas rachaV = new Rachas(0,0);
-            Rachas rachaD = new Rachas(0,0);;
-            Rachas bj = new Rachas(0,0);
-            Rachas partidasJugadas = new Rachas(0,0);
+            Rachas rachaV = new Rachas(0, 0, 0);
+            Rachas rachaD = new Rachas(0, 0, 0);
+            ;
+            Rachas bj = new Rachas(0, 0, 0);
+            Rachas partidasJugadas = new Rachas(0, 0, 0);
             //Rachas de victorias
-            String sql = " SELECT idUsuario\n" +
+            String sql = "SELECT idUsuario\n" +
                     "\t,MAX(cnt) AS valor\n" +
                     "\t,CASE \n" +
                     "\t\tWHEN MAX(cnt) >= 0\n" +
-                    "\t\t\tAND MAX(cnt) <= 3\n" +
-                    "\t\t\tTHEN 1\n" +
-                    "\t\tWHEN MAX(cnt) > 3\n" +
                     "\t\t\tAND MAX(cnt) <= 5\n" +
-                    "\t\t\tTHEN 2\n" +
+                    "\t\t\tTHEN 1\n" +
                     "\t\tWHEN MAX(cnt) > 5\n" +
-                    "\t\t\tAND MAX(cnt) <= 7\n" +
-                    "\t\t\tTHEN 3\n" +
-                    "\t\tWHEN MAX(cnt) > 7\n" +
                     "\t\t\tAND MAX(cnt) <= 10\n" +
-                    "\t\t\tTHEN 4\n" +
+                    "\t\t\tTHEN 2\n" +
+                    "\t\tWHEN MAX(cnt) > 10\n" +
+                    "\n" +
+                    "\t\t\tTHEN 3\n" +
                     "\t\tEND AS tier\n" +
                     "FROM (\n" +
                     "\tSELECT idUsuario\n" +
@@ -694,32 +690,38 @@ public class BlackJackController {
                     "GROUP BY idUsuario";
 
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1,userId);
+            st.setInt(1, userId);
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 int valor1 = rs.getInt(2);
                 int tier1 = rs.getInt(3);
+                float porcentaje = 0f;
+                if (tier1 == 1) {
+                    porcentaje = ((float)valor1 / (float)5) * (float)100;
+                } else if (tier1 == 2) {
+                    porcentaje = ((float)valor1 / (float)10) * (float)100;
+                } else if (tier1 == 3) {
+                    porcentaje = 100f;
+                }
 
-               rachaV = new Rachas(valor1,tier1);
+                rachaV = new Rachas(valor1, tier1, porcentaje);
             }
-        //Rachas de derrotas
+            //Rachas de derrotas
             String sql2 = "SELECT idUsuario\n" +
                     "\t,MAX(cnt) AS valor\n" +
                     "\t,CASE \n" +
                     "\t\tWHEN MAX(cnt) >= 0\n" +
-                    "\t\t\tAND MAX(cnt) <= 3\n" +
-                    "\t\t\tTHEN 1\n" +
-                    "\t\tWHEN MAX(cnt) > 3\n" +
                     "\t\t\tAND MAX(cnt) <= 5\n" +
-                    "\t\t\tTHEN 2\n" +
+                    "\t\t\tTHEN 1\n" +
                     "\t\tWHEN MAX(cnt) > 5\n" +
-                    "\t\t\tAND MAX(cnt) <= 7\n" +
-                    "\t\t\tTHEN 3\n" +
-                    "\t\tWHEN MAX(cnt) > 7\n" +
                     "\t\t\tAND MAX(cnt) <= 10\n" +
-                    "\t\t\tTHEN 4\n" +
+                    "\t\t\tTHEN 2\n" +
+                    "\t\tWHEN MAX(cnt) > 10\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tTHEN 3\n" +
+                    "\n" +
                     "\t\tEND AS tier\n" +
                     "FROM (\n" +
                     "\tSELECT idUsuario\n" +
@@ -744,15 +746,24 @@ public class BlackJackController {
                     "GROUP BY idUsuario";
 
             PreparedStatement st2 = conn.prepareStatement(sql2);
-            st2.setInt(1,userId);
+            st2.setInt(1, userId);
 
             ResultSet rs2 = st.executeQuery();
 
-            while(rs2.next()){
+            while (rs2.next()) {
                 int valor = rs2.getInt(2);
                 int tier = rs2.getInt(3);
 
-                rachaD = new Rachas(valor,tier);
+                float porcentaje = 0f;
+                if (tier == 1) {
+                    porcentaje = ((float)valor / (float)5) * (float)100;
+                } else if (tier == 2) {
+                    porcentaje = ((float)valor / (float)10) * (float)100;
+                } else if (tier == 3) {
+                    porcentaje = 100f;
+                }
+
+                rachaD = new Rachas(valor, tier, porcentaje);
             }
 
             //Cantidad de BlackJacks
@@ -766,11 +777,8 @@ public class BlackJackController {
                     "\t\t\tAND count(*) <= 25\n" +
                     "\t\t\tTHEN 2\n" +
                     "\t\tWHEN count(*) > 25\n" +
-                    "\t\t\tAND count(*) <= 50\n" +
+                    "\n" +
                     "\t\t\tTHEN 3\n" +
-                    "\t\tWHEN count(*) > 50\n" +
-                    "\t\t\tAND count(*) <= 100\n" +
-                    "\t\t\tTHEN 4\n" +
                     "\t\tEND AS tier\n" +
                     "\n" +
                     "FROM partidas p\n" +
@@ -779,15 +787,24 @@ public class BlackJackController {
                     "\tAND p.idUsuario = ?";
 
             PreparedStatement st3 = conn.prepareStatement(sql3);
-            st3.setInt(1,userId);
+            st3.setInt(1, userId);
 
             ResultSet rs3 = st3.executeQuery();
 
-            while(rs3.next()){
+            while (rs3.next()) {
                 int valor = rs3.getInt(1);
                 int tier = rs3.getInt(2);
 
-                bj = new Rachas(valor,tier);
+                float porcentaje = 0f;
+                if (tier == 1) {
+                    porcentaje = ((float)valor / (float)10) * (float)100;
+                } else if (tier == 2) {
+                    porcentaje = ((float)valor / (float)25) * (float)100;
+                } else if (tier == 3) {
+                    porcentaje = 100f;
+                }
+
+                bj = new Rachas(valor, tier, porcentaje);
             }
 
             //Cantidad de Partidas Jugadas
@@ -801,29 +818,35 @@ public class BlackJackController {
                     "\t\t\tAND count(*) <= 25\n" +
                     "\t\t\tTHEN 2\n" +
                     "\t\tWHEN count(*) > 25\n" +
-                    "\t\t\tAND count(*) <= 50\n" +
+                    "\t\t\t\n" +
                     "\t\t\tTHEN 3\n" +
-                    "\t\tWHEN count(*) > 50\n" +
-                    "\t\t\tAND count(*) <= 100\n" +
-                    "\t\t\tTHEN 4\n" +
+                    "\n" +
                     "\t\tEND AS tier\n" +
                     "FROM partidas p\n" +
                     "WHERE p.finalizada = true\n" +
-                    "\tAND p.idUsuario = ?\t";
+                    "\tAND p.idUsuario = ?";
 
             PreparedStatement st4 = conn.prepareStatement(sql4);
-            st4.setInt(1,userId);
+            st4.setInt(1, userId);
 
             ResultSet rs4 = st4.executeQuery();
 
-            while(rs4.next()){
+            while (rs4.next()) {
                 int valor = rs4.getInt(1);
                 int tier = rs4.getInt(2);
 
-                partidasJugadas = new Rachas(valor,tier);
+                float porcentaje = 0f;
+                if (tier == 1) {
+                    porcentaje = ((float)valor / (float)10) * (float)100;
+                } else if (tier == 2) {
+                    porcentaje = ((float)valor / (float)25) * (float)100;
+                } else if (tier == 3) {
+                    porcentaje = 100f;
+                }
+                partidasJugadas = new Rachas(valor, tier, porcentaje);
             }
 
-            EstadisticasDTO dto = new EstadisticasDTO(rachaV,rachaD,bj,partidasJugadas);
+            EstadisticasDTO dto = new EstadisticasDTO(rachaV, rachaD, bj, partidasJugadas);
             return ResponseEntity.status(200).body(dto);
 
         } catch (SQLException ex) {
