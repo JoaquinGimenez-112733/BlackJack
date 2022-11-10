@@ -57,7 +57,7 @@ VALUES (
 	,'[{"palo": "diamonds", "orden": 1, "valor": 3, "numero": "3"}, {"palo": "diamonds", "orden": 3, "valor": 6, "numero": "6"}, {"palo": "spades", "orden": 5, "valor": 7, "numero": "7"}]'
 	,'[{"palo": "spades", "orden": 2, "valor": 6, "numero": "6"}, {"palo": "clubs", "orden": 4, "valor": 4, "numero": "4"}, {"palo": "diamonds", "orden": 6, "valor": 7, "numero": "7"}]'
 	,1
-	,'2022-10-08'
+	,'2022-10-20'
 	,0
 	,1
 	,0
@@ -71,7 +71,7 @@ VALUES (
 	,'[{"palo": "spades", "orden": 1, "valor": 3, "numero": "3"}, {"palo": "diamonds", "orden": 3, "valor": 10, "numero": "Q"}, {"palo": "hearts", "orden": 5, "valor": 4, "numero": "4"}]'
 	,'[{"palo": "hearts", "orden": 2, "valor": 10, "numero": "Q"}, {"palo": "clubs", "orden": 4, "valor": 10, "numero": "J"}]'
 	,1
-	,'2022-10-09'
+	,'2022-10-21'
 	,0
 	,1
 	,0
@@ -85,7 +85,7 @@ VALUES (
 	,'[{"palo": "spades", "orden": 1, "valor": 4, "numero": "4"}, {"palo": "diamonds", "orden": 3, "valor": 3, "numero": "3"}, {"palo": "spades", "orden": 5, "valor": 6, "numero": "6"}, {"palo": "hearts", "orden": 6, "valor": 8, "numero": "8"}]'
 	,'[{"palo": "spades", "orden": 2, "valor": 10, "numero": "10"}, {"palo": "clubs", "orden": 4, "valor": 10, "numero": "10"}]'
 	,1
-	,'2022-10-09'
+	,'2022-10-22'
 	,1
 	,0
 	,0
@@ -99,7 +99,7 @@ VALUES (
 	,'[{"palo": "spades", "orden": 1, "valor": 3, "numero": "3"}, {"palo": "hearts", "orden": 3, "valor": 3, "numero": "3"}, {"palo": "spades", "orden": 5, "valor": 1, "numero": "A"}, {"palo": "spades", "orden": 6, "valor": 5, "numero": "5"}, {"palo": "clubs", "orden": 7, "valor": 8, "numero": "8"}]'
 	,'[{"palo": "spades", "orden": 2, "valor": 2, "numero": "2"}, {"palo": "clubs", "orden": 4, "valor": 5, "numero": "5"}, {"palo": "hearts", "orden": 8, "valor": 10, "numero": "10"}]'
 	,1
-	,'2022-10-09'
+	,'2022-10-23'
 	,1
 	,0
 	,0
@@ -113,7 +113,7 @@ VALUES (
 	,'[{"palo": "spades", "orden": 1, "valor": 10, "numero": "K"}, {"palo": "hearts", "orden": 3, "valor": 3, "numero": "3"}, {"palo": "hearts", "orden": 5, "valor": 10, "numero": "10"}]'
 	,'[{"palo": "spades", "orden": 2, "valor": 10, "numero": "Q"}, {"palo": "spades", "orden": 4, "valor": 9, "numero": "9"}]'
 	,1
-	,'2022-10-10'
+	,'2022-10-24'
 	,0
 	,1
 	,0
@@ -127,7 +127,7 @@ VALUES (
 	,'[{"palo": "hearts", "orden": 1, "valor": 10, "numero": "K"}, {"palo": "spades", "orden": 3, "valor": 10, "numero": "J"}]'
 	,'[{"palo": "diamonds", "orden": 2, "valor": 9, "numero": "9"}, {"palo": "diamonds", "orden": 4, "valor": 10, "numero": "10"}]'
 	,1
-	,'2022-10-11'
+	,'2022-10-25'
 	,1
 	,0
 	,0
@@ -141,7 +141,7 @@ VALUES (
 	,'[{"palo": "hearts", "orden": 1, "valor": 8, "numero": "8"}, {"palo": "diamonds", "orden": 3, "valor": 2, "numero": "2"}, {"palo": "clubs", "orden": 5, "valor": 10, "numero": "K"}]'
 	,'[{"palo": "hearts", "orden": 2, "valor": 10, "numero": "Q"}, {"palo": "spades", "orden": 4, "valor": 4, "numero": "4"}, {"palo": "clubs", "orden": 6, "valor": 6, "numero": "6"}]'
 	,1
-	,'2022-10-12'
+	,'2022-10-26'
 	,0
 	,0
 	,1
@@ -155,7 +155,7 @@ VALUES (
 	,'[{"palo": "clubs", "orden": 1, "valor": 5, "numero": "5"}, {"palo": "hearts", "orden": 3, "valor": 10, "numero": "K"}, {"palo": "clubs", "orden": 5, "valor": 10, "numero": "J"}]'
 	,'[{"palo": "clubs", "orden": 2, "valor": 3, "numero": "3"}, {"palo": "hearts", "orden": 4, "valor": 9, "numero": "9"}]'
 	,1
-	,'2022-10-13'
+	,'2022-10-27'
 	,0
 	,1
 	,0
@@ -169,7 +169,7 @@ VALUES (
 	,'[{"palo": "spades", "orden": 1, "valor": 3, "numero": "3"}, {"palo": "hearts", "orden": 3, "valor": 4, "numero": "4"}, {"palo": "clubs", "orden": 5, "valor": 5, "numero": "5"}, {"palo": "clubs", "orden": 6, "valor": 7, "numero": "7"}]'
 	,'[{"palo": "clubs", "orden": 2, "valor": 10, "numero": "K"}, {"palo": "spades", "orden": 4, "valor": 9, "numero": "9"}]'
 	,1
-	,'2022-10-13'
+	,'2022-10-28'
 	,0
 	,0
 	,1
@@ -183,7 +183,7 @@ VALUES (
 	,'[{"palo": "spades", "orden": 1, "valor": 5, "numero": "5"}, {"palo": "clubs", "orden": 3, "valor": 2, "numero": "2"}, {"palo": "hearts", "orden": 5, "valor": 10, "numero": "10"}]'
 	,'[{"palo": "diamonds", "orden": 2, "valor": 10, "numero": "10"}, {"palo": "diamonds", "orden": 4, "valor": 11, "numero": "A"}]'
 	,1
-	,'2022-10-13'
+	,'2022-10-29'
 	,0
 	,1
 	,0
@@ -197,7 +197,7 @@ VALUES (
 	,'[{"palo": "hearts", "orden": 1, "valor": 10, "numero": "Q"}, {"palo": "hearts", "orden": 3, "valor": 8, "numero": "8"}, {"palo": "diamonds", "orden": 5, "valor": 10, "numero": "J"}]'
 	,'[{"palo": "diamonds", "orden": 2, "valor": 1, "numero": "A"}, {"palo": "diamonds", "orden": 4, "valor": 10, "numero": "K"}]'
 	,1
-	,'2022-10-14'
+	,'2022-10-30'
 	,0
 	,1
 	,0
@@ -211,7 +211,7 @@ VALUES (
 	,'[{"palo": "hearts", "orden": 1, "valor": 3, "numero": "3"}, {"palo": "hearts", "orden": 3, "valor": 7, "numero": "7"}, {"palo": "diamonds", "orden": 5, "valor": 10, "numero": "K"}]'
 	,'[{"palo": "spades", "orden": 2, "valor": 2, "numero": "2"}, {"palo": "clubs", "orden": 4, "valor": 10, "numero": "J"}, {"palo": "diamonds", "orden": 6, "valor": 7, "numero": "7"}]'
 	,1
-	,'2022-10-15'
+	,'2022-10-31'
 	,1
 	,0
 	,0
@@ -225,7 +225,7 @@ VALUES (
 	,'[{"palo": "clubs", "orden": 1, "valor": 2, "numero": "2"}, {"palo": "hearts", "orden": 3, "valor": 10, "numero": "Q"}, {"palo": "hearts", "orden": 5, "valor": 3, "numero": "3"}, {"palo": "spades", "orden": 6, "valor": 10, "numero": "J"}]'
 	,'[{"palo": "diamonds", "orden": 2, "valor": 1, "numero": "A"}, {"palo": "clubs", "orden": 4, "valor": 7, "numero": "7"}]'
 	,1
-	,'2022-10-16'
+	,'2022-11-01'
 	,0
 	,1
 	,0
@@ -239,7 +239,7 @@ VALUES (
 	,'[{"palo": "diamonds", "orden": 1, "valor": 10, "numero": "10"}, {"palo": "clubs", "orden": 3, "valor": 8, "numero": "8"}]'
 	,'[{"palo": "hearts", "orden": 2, "valor": 10, "numero": "Q"}, {"palo": "diamonds", "orden": 4, "valor": 11, "numero": "A"}]'
 	,1
-	,'2022-10-17'
+	,'2022-11-01'
 	,0
 	,1
 	,0
@@ -253,7 +253,7 @@ VALUES (
 	,'[{"palo": "clubs", "orden": 1, "valor": 10, "numero": "J"}, {"palo": "clubs", "orden": 3, "valor": 10, "numero": "K"}]'
 	,'[{"palo": "spades", "orden": 2, "valor": 10, "numero": "Q"}, {"palo": "clubs", "orden": 4, "valor": 6, "numero": "6"}, {"palo": "spades", "orden": 5, "valor": 10, "numero": "K"}]'
 	,1
-	,'2022-10-18'
+	,'2022-11-01'
 	,1
 	,0
 	,0
@@ -267,7 +267,7 @@ VALUES (
 	,'[{"palo": "diamonds", "orden": 1, "valor": 5, "numero": "5"}, {"palo": "hearts", "orden": 3, "valor": 2, "numero": "2"}, {"palo": "clubs", "orden": 5, "valor": 8, "numero": "8"}, {"palo": "spades", "orden": 6, "valor": 10, "numero": "J"}]'
 	,'[{"palo": "clubs", "orden": 2, "valor": 3, "numero": "3"}, {"palo": "diamonds", "orden": 4, "valor": 6, "numero": "6"}]'
 	,1
-	,'2022-10-19'
+	,'2022-11-02'
 	,0
 	,1
 	,0
@@ -281,7 +281,7 @@ VALUES (
 	,'[{"palo": "diamonds", "orden": 1, "valor": 10, "numero": "J"}, {"palo": "clubs", "orden": 3, "valor": 10, "numero": "10"}]'
 	,'[{"palo": "clubs", "orden": 2, "valor": 4, "numero": "4"}, {"palo": "clubs", "orden": 4, "valor": 10, "numero": "K"}, {"palo": "clubs", "orden": 5, "valor": 3, "numero": "3"}]'
 	,1
-	,'2022-10-20'
+	,'2022-11-02'
 	,1
 	,0
 	,0
@@ -295,7 +295,7 @@ VALUES (
 	,'[{"palo": "spades", "orden": 1, "valor": 6, "numero": "6"}, {"palo": "hearts", "orden": 3, "valor": 4, "numero": "4"}, {"palo": "hearts", "orden": 5, "valor": 10, "numero": "10"}]'
 	,'[{"palo": "spades", "orden": 2, "valor": 10, "numero": "10"}, {"palo": "spades", "orden": 4, "valor": 11, "numero": "A"}]'
 	,1
-	,'2022-10-21'
+	,'2022-11-02'
 	,0
 	,1
 	,0
@@ -309,7 +309,7 @@ VALUES (
 	,'[{"palo": "hearts", "orden": 1, "valor": 6, "numero": "6"}, {"palo": "clubs", "orden": 3, "valor": 8, "numero": "8"}, {"palo": "diamonds", "orden": 5, "valor": 10, "numero": "10"}]'
 	,'[{"palo": "clubs", "orden": 2, "valor": 10, "numero": "K"}, {"palo": "diamonds", "orden": 4, "valor": 9, "numero": "9"}]'
 	,1
-	,'2022-10-22'
+	,'2022-11-02'
 	,0
 	,1
 	,0
@@ -323,7 +323,7 @@ VALUES (
 	,'[{"palo": "clubs", "orden": 1, "valor": 10, "numero": "Q"}, {"palo": "diamonds", "orden": 3, "valor": 10, "numero": "J"}]'
 	,'[{"palo": "hearts", "orden": 2, "valor": 1, "numero": "A"}, {"palo": "hearts", "orden": 4, "valor": 10, "numero": "Q"}]'
 	,1
-	,'2022-10-23'
+	,'2022-11-02'
 	,0
 	,1
 	,0
@@ -337,7 +337,7 @@ VALUES (
 	,'[{"palo": "hearts", "orden": 1, "valor": 10, "numero": "K"}, {"palo": "diamonds", "orden": 3, "valor": 10, "numero": "Q"}]'
 	,'[{"palo": "hearts", "orden": 2, "valor": 8, "numero": "8"}, {"palo": "clubs", "orden": 4, "valor": 10, "numero": "10"}]'
 	,1
-	,'2022-10-24'
+	,'2022-11-03'
 	,1
 	,0
 	,0
@@ -351,7 +351,7 @@ VALUES (
 	,'[{"palo": "diamonds", "orden": 1, "valor": 6, "numero": "6"}, {"palo": "spades", "orden": 3, "valor": 8, "numero": "8"}, {"palo": "hearts", "orden": 5, "valor": 5, "numero": "5"}]'
 	,'[{"palo": "diamonds", "orden": 2, "valor": 4, "numero": "4"}, {"palo": "diamonds", "orden": 4, "valor": 10, "numero": "10"}, {"palo": "hearts", "orden": 6, "valor": 2, "numero": "2"}, {"palo": "clubs", "orden": 7, "valor": 2, "numero": "2"}]'
 	,1
-	,'2022-10-25'
+	,'2022-11-04'
 	,1
 	,0
 	,0
@@ -365,7 +365,7 @@ VALUES (
 	,'[{"palo": "diamonds", "orden": 1, "valor": 10, "numero": "10"}, {"palo": "hearts", "orden": 3, "valor": 4, "numero": "4"}, {"palo": "clubs", "orden": 5, "valor": 3, "numero": "3"}, {"palo": "hearts", "orden": 6, "valor": 10, "numero": "Q"}]'
 	,'[{"palo": "diamonds", "orden": 2, "valor": 6, "numero": "6"}, {"palo": "diamonds", "orden": 4, "valor": 10, "numero": "J"}]'
 	,1
-	,'2022-10-26'
+	,'2022-11-05'
 	,0
 	,1
 	,0
@@ -379,7 +379,7 @@ VALUES (
 	,'[{"palo": "hearts", "orden": 1, "valor": 3, "numero": "3"}, {"palo": "spades", "orden": 3, "valor": 2, "numero": "2"}, {"palo": "hearts", "orden": 5, "valor": 5, "numero": "5"}]'
 	,'[{"palo": "clubs", "orden": 2, "valor": 9, "numero": "9"}, {"palo": "diamonds", "orden": 4, "valor": 10, "numero": "K"}]'
 	,1
-	,'2022-10-26'
+	,'2022-11-05'
 	,0
 	,1
 	,0
@@ -393,7 +393,7 @@ VALUES (
 	,'[{"palo": "hearts", "orden": 1, "valor": 3, "numero": "3"}, {"palo": "diamonds", "orden": 3, "valor": 10, "numero": "10"}, {"palo": "spades", "orden": 5, "valor": 1, "numero": "A"}, {"palo": "clubs", "orden": 6, "valor": 7, "numero": "7"}]'
 	,'[{"palo": "clubs", "orden": 2, "valor": 10, "numero": "J"}, {"palo": "clubs", "orden": 4, "valor": 10, "numero": "Q"}]'
 	,1
-	,'2022-10-27'
+	,'2022-11-05'
 	,1
 	,0
 	,0
@@ -407,7 +407,7 @@ VALUES (
 	,'[{"palo": "spades", "orden": 1, "valor": 7, "numero": "7"}, {"palo": "clubs", "orden": 3, "valor": 10, "numero": "Q"}]'
 	,'[{"palo": "clubs", "orden": 2, "valor": 10, "numero": "K"}, {"palo": "clubs", "orden": 4, "valor": 4, "numero": "4"}, {"palo": "hearts", "orden": 5, "valor": 3, "numero": "3"}]'
 	,1
-	,'2022-10-27'
+	,'2022-11-06'
 	,0
 	,0
 	,1
@@ -421,7 +421,7 @@ VALUES (
 	,'[{"palo": "hearts", "orden": 1, "valor": 10, "numero": "K"}, {"palo": "spades", "orden": 3, "valor": 10, "numero": "10"}]'
 	,'[{"palo": "spades", "orden": 2, "valor": 1, "numero": "A"}, {"palo": "diamonds", "orden": 4, "valor": 7, "numero": "7"}]'
 	,1
-	,'2022-10-27'
+	,'2022-11-06'
 	,1
 	,0
 	,0
@@ -435,7 +435,7 @@ VALUES (
 	,'[{"palo": "diamonds", "orden": 1, "valor": 10, "numero": "K"}, {"palo": "spades", "orden": 3, "valor": 7, "numero": "7"}]'
 	,'[{"palo": "clubs", "orden": 2, "valor": 7, "numero": "7"}, {"palo": "spades", "orden": 4, "valor": 8, "numero": "8"}, {"palo": "clubs", "orden": 5, "valor": 5, "numero": "5"}]'
 	,1
-	,'2022-10-28'
+	,'2022-11-06'
 	,0
 	,1
 	,0
@@ -449,7 +449,7 @@ VALUES (
 	,'[{"palo": "clubs", "orden": 1, "valor": 9, "numero": "9"}, {"palo": "clubs", "orden": 3, "valor": 5, "numero": "5"}, {"palo": "spades", "orden": 5, "valor": 10, "numero": "K"}]'
 	,'[{"palo": "hearts", "orden": 2, "valor": 10, "numero": "K"}, {"palo": "diamonds", "orden": 4, "valor": 10, "numero": "K"}]'
 	,1
-	,'2022-10-29'
+	,'2022-11-07'
 	,0
 	,1
 	,0
@@ -463,7 +463,7 @@ VALUES (
 	,'[{"palo": "spades", "orden": 1, "valor": 2, "numero": "2"}, {"palo": "clubs", "orden": 3, "valor": 6, "numero": "6"}, {"palo": "clubs", "orden": 5, "valor": 4, "numero": "4"}, {"palo": "diamonds", "orden": 6, "valor": 10, "numero": "Q"}]'
 	,'[{"palo": "diamonds", "orden": 2, "valor": 7, "numero": "7"}, {"palo": "spades", "orden": 4, "valor": 7, "numero": "7"}]'
 	,1
-	,'2022-10-30'
+	,'2022-11-08'
 	,0
 	,1
 	,0
@@ -477,7 +477,7 @@ VALUES (
 	,'[{"palo": "diamonds", "orden": 1, "valor": 10, "numero": "Q"}, {"palo": "hearts", "orden": 3, "valor": 9, "numero": "9"}]'
 	,'[{"palo": "hearts", "orden": 2, "valor": 10, "numero": "10"}, {"palo": "hearts", "orden": 4, "valor": 5, "numero": "5"}, {"palo": "diamonds", "orden": 5, "valor": 7, "numero": "7"}]'
 	,1
-	,'2022-10-31'
+	,'2022-11-08'
 	,1
 	,0
 	,0
@@ -491,7 +491,7 @@ VALUES (
 	,'[{"palo": "spades", "orden": 1, "valor": 2, "numero": "2"}, {"palo": "spades", "orden": 3, "valor": 9, "numero": "9"}, {"palo": "spades", "orden": 5, "valor": 5, "numero": "5"}]'
 	,'[{"palo": "spades", "orden": 2, "valor": 4, "numero": "4"}, {"palo": "spades", "orden": 4, "valor": 10, "numero": "K"}, {"palo": "spades", "orden": 6, "valor": 6, "numero": "6"}]'
 	,1
-	,'2022-11-01'
+	,'2022-11-08'
 	,0
 	,1
 	,0
@@ -505,7 +505,7 @@ VALUES (
 	,'[{"palo": "diamonds", "orden": 1, "valor": 7, "numero": "7"}, {"palo": "spades", "orden": 3, "valor": 4, "numero": "4"}, {"palo": "spades", "orden": 5, "valor": 2, "numero": "2"}, {"palo": "diamonds", "orden": 6, "valor": 9, "numero": "9"}]'
 	,'[{"palo": "clubs", "orden": 2, "valor": 10, "numero": "Q"}, {"palo": "diamonds", "orden": 4, "valor": 2, "numero": "2"}]'
 	,1
-	,'2022-11-02'
+	,'2022-11-09'
 	,0
 	,1
 	,0
@@ -519,7 +519,7 @@ VALUES (
 	,'[{"palo": "clubs", "orden": 1, "valor": 7, "numero": "7"}, {"palo": "hearts", "orden": 3, "valor": 5, "numero": "5"}, {"palo": "clubs", "orden": 5, "valor": 6, "numero": "6"}]'
 	,'[{"palo": "diamonds", "orden": 2, "valor": 10, "numero": "J"}, {"palo": "clubs", "orden": 4, "valor": 10, "numero": "J"}]'
 	,1
-	,'2022-11-03'
+	,'2022-11-09'
 	,0
 	,1
 	,0
@@ -533,7 +533,7 @@ VALUES (
 	,'[{"palo": "spades", "orden": 1, "valor": 10, "numero": "K"}, {"palo": "hearts", "orden": 3, "valor": 8, "numero": "8"}, {"palo": "clubs", "orden": 5, "valor": 10, "numero": "K"}]'
 	,'[{"palo": "clubs", "orden": 2, "valor": 10, "numero": "J"}, {"palo": "spades", "orden": 4, "valor": 2, "numero": "2"}]'
 	,1
-	,'2022-11-04'
+	,'2022-11-09'
 	,0
 	,1
 	,0
@@ -547,7 +547,7 @@ VALUES (
 	,'[{"palo": "spades", "orden": 1, "valor": 2, "numero": "2"}, {"palo": "hearts", "orden": 3, "valor": 10, "numero": "10"}, {"palo": "hearts", "orden": 5, "valor": 10, "numero": "K"}]'
 	,'[{"palo": "spades", "orden": 2, "valor": 5, "numero": "5"}, {"palo": "spades", "orden": 4, "valor": 6, "numero": "6"}]'
 	,1
-	,'2022-11-04'
+	,'2022-11-10'
 	,0
 	,1
 	,0
@@ -561,7 +561,7 @@ VALUES (
 	,'[{"palo": "hearts", "orden": 1, "valor": 10, "numero": "Q"}, {"palo": "hearts", "orden": 3, "valor": 3, "numero": "3"}, {"palo": "spades", "orden": 5, "valor": 8, "numero": "8"}]'
 	,'[{"palo": "spades", "orden": 2, "valor": 1, "numero": "A"}, {"palo": "spades", "orden": 4, "valor": 3, "numero": "3"}, {"palo": "diamonds", "orden": 6, "valor": 10, "numero": "Q"}, {"palo": "diamonds", "orden": 7, "valor": 4, "numero": "4"}]'
 	,1
-	,'2022-11-04'
+	,'2022-11-10'
 	,1
 	,0
 	,0
