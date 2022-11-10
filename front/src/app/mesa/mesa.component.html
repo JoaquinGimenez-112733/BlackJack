@@ -50,9 +50,11 @@
     >
       <i class="fa-solid fa-plus"></i>
     </button>
-    <button 
-    [disabled]="!flagNuevaPartida"
-    class="boton plantarse" (click)="pasar()">
+    <button
+      [disabled]="!flagNuevaPartida"
+      class="boton plantarse"
+      (click)="pasar()"
+    >
       <i class="fa fa-stop"></i>
     </button>
   </div>
@@ -67,4 +69,7 @@
 
 <button class="boton logout" (click)="logout()">
   <i class="fa fa-arrow-right-from-bracket"></i>
+</button>
+<button class="boton estadisticas" (click)="verEstadisticas()">
+  <i class="fa fa-trophy icono-estadisticas"></i>
 </button>

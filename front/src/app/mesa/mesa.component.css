@@ -105,6 +105,28 @@ span {
   right: 50px;
 }
 
+.estadisticas {
+  margin-right: 20px;
+  font-size: large;
+  background-color: RGB(255, 212, 59);
+  color: #183153;
+  padding: 1rem;
+  border-radius: 50px;
+  border: none;
+  line-height: 0px;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 120px;
+  right: 50px;
+}
+
+.icono-estadisticas {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+
 .mesa {
   display: flex;
   flex-direction: row;

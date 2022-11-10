@@ -1,1 +1,158 @@
-<p>reportes works!</p>
+<div class="container h-100">
+  <div class="d-flex justify-content-center h-100">
+    <div class="user_card">
+      <!-- Logros -->
+
+      <div class="d-flex justify-content-center form_container">
+        <div
+          class="d-flex justify-content-center align-items-center h-50"
+          style="margin-left: 50px"
+        >
+          <div class="icono-logro">
+            <div class="icono-logro-interior-1">
+              <button [class]="getTierClass(rachaVictorias?.tier)">
+                <i class="fa fa-star"></i>
+              </button>
+            </div>
+          </div>
+          <div class="progress">
+            <span class="progress__label"> Racha de victorias </span>
+            <div
+              class="progress__bar"
+              [ngStyle]="{ width: rachaVictorias?.valor }"
+            ></div>
+            <span class="progress__value"> {{ rachaVictorias?.valor }}</span>
+          </div>
+        </div>
+        <div
+          class="d-flex justify-content-center align-items-center h-50"
+          style="margin-left: 50px"
+        >
+          <div class="icono-logro">
+            <div class="icono-logro-interior-2">
+              <button [class]="getTierClass(cantPartidas?.tier)">
+                <i class="fa fa-scroll"></i>
+              </button>
+            </div>
+          </div>
+          <div class="progress">
+            <span class="progress__label"> Cantidad de Partidas </span>
+            <div
+              class="progress__bar"
+              [ngStyle]="{ width: cantPartidas?.valor }"
+            ></div>
+            <span class="progress__value"> {{ cantPartidas?.valor }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center form_container">
+        <div
+          class="d-flex justify-content-center align-items-center h-50"
+          style="margin-left: 50px"
+        >
+          <div class="icono-logro">
+            <div class="icono-logro-interior-3">
+              <button [class]="getTierClass(rachaDerrotas?.tier)">
+                <i class="fa fa-cloud-bolt"></i>
+              </button>
+            </div>
+          </div>
+          <div class="progress">
+            <span class="progress__label"> Racha de derrotas </span>
+            <div
+              class="progress__bar"
+              [ngStyle]="{ width: rachaDerrotas?.valor }"
+            ></div>
+            <span class="progress__value"> {{ rachaDerrotas?.valor }}</span>
+          </div>
+        </div>
+        <div
+          class="d-flex justify-content-center align-items-center h-50"
+          style="margin-left: 50px"
+        >
+          <div class="icono-logro">
+            <div class="icono-logro-interior-4">
+              <button [class]="getTierClass(cantBJ?.tier)">
+                <i class="fa fa-fire"></i>
+              </button>
+            </div>
+          </div>
+          <div class="progress">
+            <span class="progress__label"> Cantidad de Blackjacks </span>
+            <div
+              class="progress__bar"
+              [ngStyle]="{ width: cantBJ?.valor }"
+            ></div>
+            <span class="progress__value"> {{ cantBJ?.valor }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Graficos de torta -->
+      <div class="tortas-container">
+        <div class="d-flex justify-content-center form_container">
+          <div class="d-flex justify-content-center form_container">
+            <div
+              class="d-flex justify-content-center align-items-center h-50"
+              style="margin-left: 50px"
+            >
+              <div class="chart">
+                <canvas
+                  baseChart
+                  [type]="'pie'"
+                  [datasets]="pieChartDatasets"
+                  [labels]="pieChartLabels"
+                  [options]="pieChartOptions"
+                  [plugins]="pieChartPlugins"
+                  [legend]="pieChartLegend"
+                >
+                </canvas>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center form_container">
+            <div
+              class="d-flex justify-content-center align-items-center h-50"
+              style="margin-left: 50px"
+            >
+              <div></div>
+              <div class="chart">
+                <canvas
+                  baseChart
+                  [type]="'pie'"
+                  [datasets]="pieChartDatasets2"
+                  [labels]="pieChartLabels2"
+                  [options]="pieChartOptions2"
+                  [plugins]="pieChartPlugins2"
+                  [legend]="pieChartLegend2"
+                >
+                </canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Historico -->
+      <div class="historico">
+        <div class="d-flex justify-content-center form_container chart">
+          <canvas
+            baseChart
+            [data]="barChartData"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [type]="'bar'"
+          >
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="boton logout" (click)="logout()">
+    <i class="fa fa-arrow-right-from-bracket"></i>
+  </button>
+  <button class="boton estadisticas" (click)="volver()">
+    <i class="fa fa-arrow-left"></i>
+  </button>
+</div>

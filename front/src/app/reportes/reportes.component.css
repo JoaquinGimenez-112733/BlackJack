@@ -1,0 +1,155 @@
+.boton {
+  transition: box-shadow ease 0.3s;
+  transition: transform ease 0.3s;
+}
+
+.boton:hover {
+  transform: scale(1.1);
+  box-shadow: 5px 5px 2px 1px #183153aa;
+}
+
+.logout {
+  margin-right: 20px;
+  font-size: large;
+  background-color: #aaa;
+  color: #183153;
+  padding: 1rem;
+  border-radius: 50px;
+  border: none;
+  line-height: 0px;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 50px;
+  right: 50px;
+}
+
+.estadisticas {
+  margin-right: 20px;
+  font-size: large;
+  background-color: RGB(255, 212, 59);
+  color: #183153;
+  padding: 1rem;
+  border-radius: 50px;
+  border: none;
+  line-height: 0px;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 120px;
+  right: 50px;
+}
+
+.icono-estadisticas {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+
+.progress {
+  width: 300px;
+  height: 70px;
+  margin: 20px;
+  background-color: #333;
+}
+
+.progress__bar {
+  transition: box-shadow ease 0.3s;
+  transition: transform ease 0.3s;
+  background-color: #04aa6d;
+  height: 50px;
+  margin: 10px;
+}
+
+.progress__label {
+  position: relative;
+  white-space: nowrap;
+  top: 10px;
+  left: 15px;
+  width: 0;
+  height: 0;
+  font-size: 13px;
+}
+
+.progress__value {
+  position: relative;
+  /* Numero a la izq */
+  right: 55px;
+  /* Numero a la der */
+  right: 5px;
+  top: 25px;
+  margin: 5px;
+  font-size: 20px;
+}
+
+.bronce {
+  background-color: #cd7f32;
+  font-size: large;
+  color: #183153;
+  border-radius: 50px;
+  border: none;
+  line-height: 0px;
+  height: 64px;
+  width: 64px;
+}
+
+.plata {
+  background-color: #c0c0c0;
+  font-size: large;
+  color: #183153;
+  border-radius: 50px;
+  border: none;
+  line-height: 0px;
+  height: 64px;
+  width: 64px;
+}
+
+.oro {
+  background-color: #ffd700;
+  font-size: large;
+  color: #183153;
+  border-radius: 50px;
+  border: none;
+  line-height: 0px;
+  height: 64px;
+  width: 64px;
+}
+
+.icono-logro {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #333;
+}
+
+.icono-logro-interior-1 {
+  width: 65px;
+  height: 65px;
+  margin: 7.5px;
+  border-radius: 50%;
+}
+.icono-logro-interior-2 {
+  width: 65px;
+  height: 65px;
+  margin: 7.5px;
+  border-radius: 50%;
+}
+.icono-logro-interior-3 {
+  width: 65px;
+  height: 65px;
+  margin: 7.5px;
+  border-radius: 50%;
+}
+.icono-logro-interior-4 {
+  width: 65px;
+  height: 65px;
+  margin: 7.5px;
+  border-radius: 50%;
+}
+.chart {
+  margin-top: 150px;
+}
+
+.tortas-container {
+  height: 250px;
+}

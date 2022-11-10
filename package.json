@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@types/chart.js": "^2.9.37",
+    "chart.js": "^3.9.1",
+    "chartjs-plugin-datalabels": "^2.1.0",
+    "ng2-charts": "^4.0.1"
+  }
+}
