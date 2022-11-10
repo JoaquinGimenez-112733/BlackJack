@@ -2,6 +2,7 @@
   <div class="d-flex justify-content-center h-100">
     <div class="user_card">
       <!-- Logros -->
+      <div class="d-flex justify-content-center form_container">Logros</div>
 
       <div class="d-flex justify-content-center form_container">
         <div
@@ -96,63 +97,88 @@
               class="d-flex justify-content-center align-items-center h-50"
               style="margin-left: 50px"
             >
-              <div class="chart">
-                <canvas
-                  baseChart
-                  [type]="'pie'"
-                  [datasets]="pieChartDatasets"
-                  [labels]="pieChartLabels"
-                  [options]="pieChartOptions"
-                  [plugins]="pieChartPlugins"
-                  [legend]="pieChartLegend"
-                >
-                </canvas>
+              <div class="d-flex justify-content-center form_container">
+                Porcentaje de Blackjacks entre jugadores y Croupier
               </div>
             </div>
-          </div>
-          <div class="d-flex justify-content-center form_container">
             <div
               class="d-flex justify-content-center align-items-center h-50"
               style="margin-left: 50px"
             >
-              <div></div>
-              <div class="chart">
-                <canvas
-                  baseChart
-                  [type]="'pie'"
-                  [datasets]="pieChartDatasets2"
-                  [labels]="pieChartLabels2"
-                  [options]="pieChartOptions2"
-                  [plugins]="pieChartPlugins2"
-                  [legend]="pieChartLegend2"
-                >
-                </canvas>
+              <div class="d-flex justify-content-center form_container">
+                Resultados de partidas globales
               </div>
             </div>
           </div>
         </div>
-      </div>
+        <div class="tortas-container">
+          <div class="d-flex justify-content-center form_container">
+            <div class="d-flex justify-content-center form_container">
+              <div
+                class="d-flex justify-content-center align-items-center h-50"
+                style="margin-left: 50px"
+              >
+                <div class="chart">
+                  <canvas
+                    baseChart
+                    [type]="'pie'"
+                    [datasets]="pieChartDatasets"
+                    [labels]="pieChartLabels"
+                    [options]="pieChartOptions"
+                    [plugins]="pieChartPlugins"
+                    [legend]="pieChartLegend"
+                  >
+                  </canvas>
+                </div>
+              </div>
+            </div>
 
-      <!-- Historico -->
-      <div class="historico">
-        <div class="d-flex justify-content-center form_container chart">
-          <canvas
-            baseChart
-            [data]="barChartData"
-            [options]="barChartOptions"
-            [plugins]="barChartPlugins"
-            [legend]="barChartLegend"
-            [type]="'bar'"
-          >
-          </canvas>
+            <div class="d-flex justify-content-center form_container">
+              <div
+                class="d-flex justify-content-center align-items-center h-50"
+                style="margin-left: 50px"
+              >
+                <div class="chart">
+                  <canvas
+                    baseChart
+                    [type]="'pie'"
+                    [datasets]="pieChartDatasets2"
+                    [labels]="pieChartLabels2"
+                    [options]="pieChartOptions2"
+                    [plugins]="pieChartPlugins2"
+                    [legend]="pieChartLegend2"
+                  >
+                  </canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Historico -->
+        <div class="historico">
+          <div class="d-flex justify-content-center form_container">
+            Cantidad de partidas y jugadores de los ultimos 30 días
+          </div>
+          <div class="d-flex justify-content-center form_container chart">
+            <canvas
+              baseChart
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [plugins]="barChartPlugins"
+              [legend]="barChartLegend"
+              [type]="'bar'"
+            >
+            </canvas>
+          </div>
         </div>
       </div>
     </div>
+    <button class="boton logout" (click)="logout()">
+      <i class="fa fa-arrow-right-from-bracket"></i>
+    </button>
+    <button class="boton estadisticas" (click)="volver()">
+      <i class="fa fa-arrow-left"></i>
+    </button>
   </div>
-  <button class="boton logout" (click)="logout()">
-    <i class="fa fa-arrow-right-from-bracket"></i>
-  </button>
-  <button class="boton estadisticas" (click)="volver()">
-    <i class="fa fa-arrow-left"></i>
-  </button>
 </div>
