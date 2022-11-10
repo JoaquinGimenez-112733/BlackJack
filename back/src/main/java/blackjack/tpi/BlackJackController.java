@@ -435,7 +435,7 @@ public class BlackJackController {
     private String abrirConexion() {
         String msj = "";
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "root", "*Q1w2e3");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "root", "123456");
             msj = "Conexion exitosa!";
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -863,18 +863,13 @@ public class BlackJackController {
 
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping(value = "/reportesGlobales")
-    public ResponseEntity<EstadisticasGlobalesDTO> getGlobales() {
+    @GetMapping(value = "/tortaIzq")
+    public ResponseEntity<TortaIzq> getTortaIzq() {
 
         try {
             abrirConexion();
 
             TortaIzq tortaIzq = new TortaIzq(0f, 0f);
-            TortaDer tortaDer = new TortaDer(0f, 0f, 0f);
-
-            ArrayList<String> fechas = new ArrayList<String>();
-            ArrayList<Integer> partidas = new ArrayList<Integer>();
-            ArrayList<Integer> jugadores = new ArrayList<Integer>();
 
 
             //Torta Izquierda - Porcentaje de BlackJacks
@@ -904,8 +899,33 @@ public class BlackJackController {
                 porcentajeJugador = rs.getFloat(1);
                 porcentajeCompu = rs.getFloat(2);
 
-                tortaIzq = new TortaIzq(porcentajeJugador, porcentajeCompu);
+
             }
+            tortaIzq = new TortaIzq(porcentajeJugador, porcentajeCompu);
+            rs.close();
+            st.close();
+
+            return ResponseEntity.status(200).body(tortaIzq);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return ResponseEntity.status(400).body(null);
+        } finally {
+            cerrarConexion();
+        }
+
+
+    }
+
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/tortaDer")
+    public ResponseEntity<TortaDer> getTortaDer() {
+
+
+        try {
+            abrirConexion();
+
+            TortaDer tortaDer = new TortaDer(0f, 0f, 0f);
 
 
             //Torta Derecha - Resultados en porcentajes
@@ -927,9 +947,30 @@ public class BlackJackController {
                 porcentajeLose = rs2.getFloat(2);
                 porcentajeTie = rs2.getFloat(3);
 
-                tortaDer = new TortaDer(porcentajeWin, porcentajeLose, porcentajeTie);
-            }
 
+            }
+            tortaDer = new TortaDer(porcentajeWin, porcentajeLose, porcentajeTie);
+            rs2.close();
+            st2.close();
+
+            return ResponseEntity.status(200).body(tortaDer);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return ResponseEntity.status(400).body(null);
+        } finally {
+            cerrarConexion();
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/grafico")
+    public ResponseEntity<GraficoBarras> getGrafico() {
+        try {
+            abrirConexion();
+
+            ArrayList<String> fechas = new ArrayList<String>();
+            ArrayList<Integer> partidas = new ArrayList<Integer>();
+            ArrayList<Integer> jugadores = new ArrayList<Integer>();
 
             //Graficos de barra - Consulta para array de partidas en los ultimos 30 dias
             String sql3 = "SELECT CONCAT (\n" +
@@ -1151,7 +1192,8 @@ public class BlackJackController {
                 fechas.add(rs3.getString(1));
                 partidas.add(rs3.getInt(3));
             }
-
+            rs3.close();
+            st3.close();
 
             //Graficos de barra - Consulta para array de jugadores en los ultimos 30 dias
             String sql4 = "SELECT CONCAT (\n" +
@@ -1370,18 +1412,20 @@ public class BlackJackController {
 
 
             while (rs4.next()) {
-
                 jugadores.add(rs4.getInt(3));
             }
-           GraficoBarras grafico = new GraficoBarras(fechas, partidas, jugadores);
-            EstadisticasGlobalesDTO dto = new EstadisticasGlobalesDTO(tortaIzq, tortaDer, grafico);
-        return ResponseEntity.status(200).body(dto);
+
+            rs4.close();
+            st4.close();
+            GraficoBarras grafico = new GraficoBarras(fechas, partidas, jugadores);
+
+            return ResponseEntity.status(200).body(grafico);
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             return ResponseEntity.status(400).body(null);
         } finally {
             cerrarConexion();
         }
-
     }
 }

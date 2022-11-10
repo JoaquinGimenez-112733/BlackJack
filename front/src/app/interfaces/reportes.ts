@@ -33,3 +33,19 @@ export interface RespuestaReportesGlobales {
     jugadores: number[];
   };
 }
+
+export interface TortaIzq {
+  jugadorP: number;
+  compuP: number;
+}
+export interface TortaDer {
+  win: number;
+  lose: number;
+  tie: number;
+}
+
+export interface Grafico {
+  fecha: string[];
+  partidas: number[];
+  jugadores: number[];
+}

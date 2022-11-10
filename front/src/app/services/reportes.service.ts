@@ -1,4 +1,9 @@
-import { RespuestaReportesGlobales } from './../interfaces/reportes';
+import {
+  Grafico,
+  RespuestaReportesGlobales,
+  TortaDer,
+  TortaIzq,
+} from './../interfaces/reportes';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -15,7 +20,13 @@ export class ReportesService {
   getReportesIndividuales(): Observable<RespuestaReportesIndividuales> {
     return this._http.get<any>(this.apiURL + '/reportesIndividuales', {});
   }
-  getReportesGlobales(): Observable<RespuestaReportesGlobales> {
-    return this._http.get<any>(this.apiURL + '/reportesGlobales');
+  getTortaIzq(): Observable<TortaIzq> {
+    return this._http.get<any>(this.apiURL + '/tortaIzq');
+  }
+  getTortaDer(): Observable<TortaDer> {
+    return this._http.get<any>(this.apiURL + '/tortaDer');
+  }
+  getGrafico(): Observable<Grafico> {
+    return this._http.get<any>(this.apiURL + '/grafico');
   }
 }

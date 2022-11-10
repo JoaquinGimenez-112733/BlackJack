@@ -116,40 +116,44 @@ export class ReportesComponent {
       this.rachaDerrotas = data.rachaDerrotas;
       this.cantBJ = data.cantBJ;
     });
-    this.reporteService.getReportesGlobales().subscribe((data) => {
+    this.reporteService.getTortaIzq().subscribe((data) => {
       // Torta izquierda
       this.pieChartDatasets = [
         {
-          data: [data.tortaIzq.compuP, data.tortaIzq.jugadorP],
+          data: [data.compuP, data.jugadorP],
           borderWidth: 0,
           backgroundColor: ['#FF6384bb', '#36A2EBbb'],
           hoverBackgroundColor: ['#FF6384', '#36A2EB'],
         },
       ] as any;
+    });
 
+    this.reporteService.getTortaDer().subscribe((data) => {
       // Torta derecha
       this.pieChartDatasets2 = [
         {
-          data: [data.tortaDer.win, data.tortaDer.tie, data.tortaDer.lose],
+          data: [data.win, data.tie, data.lose],
           borderWidth: 0,
           backgroundColor: ['#04aa6dbb', '#FFCE56bb', '#FF6384bb'],
           hoverBackgroundColor: ['#04aa6d', '#FFCE56', '#FF6384'],
         },
       ] as any;
+    });
 
+    this.reporteService.getGrafico().subscribe((data) => {
       // Grafico historico
       this.barChartData = {
-        labels: [...data.grafico.fecha],
+        labels: [...data.fecha],
         datasets: [
           {
-            data: [...data.grafico.jugadores],
+            data: [...data.jugadores],
             label: 'Jugadores',
             borderWidth: 0,
             backgroundColor: ['#FF6384bb'],
             hoverBackgroundColor: ['#FF6384'],
           },
           {
-            data: [...data.grafico.partidas],
+            data: [...data.partidas],
             label: 'Partidas',
             borderWidth: 0,
             backgroundColor: ['#36A2EBbb'],
