@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.sql.*;
 
 import Models.*;
+import Models.Reportes.GraficoBarras;
 import Models.Reportes.Rachas;
+import Models.Reportes.TortaDer;
+import Models.Reportes.TortaIzq;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.jsonwebtoken.Claims;
@@ -699,9 +702,9 @@ public class BlackJackController {
                 int tier1 = rs.getInt(3);
                 float porcentaje = 0f;
                 if (tier1 == 1) {
-                    porcentaje = ((float)valor1 / (float)5) * (float)100;
+                    porcentaje = ((float) valor1 / (float) 5) * (float) 100;
                 } else if (tier1 == 2) {
-                    porcentaje = ((float)valor1 / (float)10) * (float)100;
+                    porcentaje = ((float) valor1 / (float) 10) * (float) 100;
                 } else if (tier1 == 3) {
                     porcentaje = 100f;
                 }
@@ -756,9 +759,9 @@ public class BlackJackController {
 
                 float porcentaje = 0f;
                 if (tier == 1) {
-                    porcentaje = ((float)valor / (float)5) * (float)100;
+                    porcentaje = ((float) valor / (float) 5) * (float) 100;
                 } else if (tier == 2) {
-                    porcentaje = ((float)valor / (float)10) * (float)100;
+                    porcentaje = ((float) valor / (float) 10) * (float) 100;
                 } else if (tier == 3) {
                     porcentaje = 100f;
                 }
@@ -797,9 +800,9 @@ public class BlackJackController {
 
                 float porcentaje = 0f;
                 if (tier == 1) {
-                    porcentaje = ((float)valor / (float)10) * (float)100;
+                    porcentaje = ((float) valor / (float) 10) * (float) 100;
                 } else if (tier == 2) {
-                    porcentaje = ((float)valor / (float)25) * (float)100;
+                    porcentaje = ((float) valor / (float) 25) * (float) 100;
                 } else if (tier == 3) {
                     porcentaje = 100f;
                 }
@@ -837,9 +840,9 @@ public class BlackJackController {
 
                 float porcentaje = 0f;
                 if (tier == 1) {
-                    porcentaje = ((float)valor / (float)10) * (float)100;
+                    porcentaje = ((float) valor / (float) 10) * (float) 100;
                 } else if (tier == 2) {
-                    porcentaje = ((float)valor / (float)25) * (float)100;
+                    porcentaje = ((float) valor / (float) 25) * (float) 100;
                 } else if (tier == 3) {
                     porcentaje = 100f;
                 }
@@ -852,6 +855,530 @@ public class BlackJackController {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return ResponseEntity.status(200).body(null);
+        } finally {
+            cerrarConexion();
+        }
+
+    }
+
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/reportesGlobales")
+    public ResponseEntity<EstadisticasGlobalesDTO> getGlobales() {
+
+        try {
+            abrirConexion();
+
+            TortaIzq tortaIzq = new TortaIzq(0f, 0f);
+            TortaDer tortaDer = new TortaDer(0f, 0f, 0f);
+
+            ArrayList<String> fechas = new ArrayList<String>();
+            ArrayList<Integer> partidas = new ArrayList<Integer>();
+            ArrayList<Integer> jugadores = new ArrayList<Integer>();
+
+
+            //Torta Izquierda - Porcentaje de BlackJacks
+            String sql = "\t\n" +
+                    "SELECT round(SUM(CASE \n" +
+                    "\t\t\tWHEN p.puntajeUsuario = 21\n" +
+                    "\t\t\t\tTHEN 1\n" +
+                    "\t\t\tEND) / count(*) * 100, 2) as porcentajeJugador\n" +
+                    "\t,round(SUM(CASE \n" +
+                    "\t\t\tWHEN p.puntajeCompu = 21\n" +
+                    "\t\t\t\tTHEN 1\n" +
+                    "\t\t\tEND) / count(*) * 100,2) as porcentajeCompu\n" +
+                    "FROM partidas p\n" +
+                    "INNER JOIN usuario u ON p.idUsuario = u.id\n" +
+                    "WHERE p.finalizada = true\n" +
+                    "\tAND (\n" +
+                    "\t\tpuntajeUsuario = 21\n" +
+                    "\t\tOR puntajeCompu = 21\n" +
+                    "\t\t)";
+
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            float porcentajeJugador = 0;
+            float porcentajeCompu = 0;
+
+            while (rs.next()) {
+                porcentajeJugador = rs.getFloat(1);
+                porcentajeCompu = rs.getFloat(2);
+
+                tortaIzq = new TortaIzq(porcentajeJugador, porcentajeCompu);
+            }
+
+
+            //Torta Derecha - Resultados en porcentajes
+            String sql2 = "SELECT round(avg(win) * 100,2) as win\n" +
+                    "\t,round(avg(lose) * 100,2) as lose\n" +
+                    "\t,round(avg(tie) * 100,2) as tie\n" +
+                    "FROM partidas p\n" +
+                    "INNER JOIN usuario u ON p.idUsuario = u.id\n" +
+                    "WHERE p.finalizada = true";
+
+            Statement st2 = conn.createStatement();
+            ResultSet rs2 = st2.executeQuery(sql2);
+            float porcentajeWin = 0f;
+            float porcentajeLose = 0f;
+            float porcentajeTie = 0f;
+
+            while (rs2.next()) {
+                porcentajeWin = rs2.getFloat(1);
+                porcentajeLose = rs2.getFloat(2);
+                porcentajeTie = rs2.getFloat(3);
+
+                tortaDer = new TortaDer(porcentajeWin, porcentajeLose, porcentajeTie);
+            }
+
+
+            //Graficos de barra - Consulta para array de partidas en los ultimos 30 dias
+            String sql3 = "SELECT CONCAT (\n" +
+                    "\t\tmonth(v.selected_date)\n" +
+                    "\t\t,\"-\"\n" +
+                    "\t\t,day(v.selected_date)\n" +
+                    "\t\t) AS fecha\n" +
+                    "\t,p.fechaInicio\n" +
+                    "\t,count(DISTINCT p.id)\n" +
+                    "FROM (\n" +
+                    "\tSELECT adddate('1970-01-01', t4.i * 10000 + t3.i * 1000 + t2.i * 100 + t1.i * 10 + t0.i) selected_date\n" +
+                    "\tFROM (\n" +
+                    "\t\tSELECT 0 i\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 1\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 2\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 3\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 4\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 5\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 6\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 7\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 8\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 9\n" +
+                    "\t\t) t0\n" +
+                    "\t\t,(\n" +
+                    "\t\t\tSELECT 0 i\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 1\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 2\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 3\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 4\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 5\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 6\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 7\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 8\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 9\n" +
+                    "\t\t\t) t1\n" +
+                    "\t\t,(\n" +
+                    "\t\t\tSELECT 0 i\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 1\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 2\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 3\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 4\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 5\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 6\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 7\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 8\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 9\n" +
+                    "\t\t\t) t2\n" +
+                    "\t\t,(\n" +
+                    "\t\t\tSELECT 0 i\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 1\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 2\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 3\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 4\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 5\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 6\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 7\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 8\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 9\n" +
+                    "\t\t\t) t3\n" +
+                    "\t\t,(\n" +
+                    "\t\t\tSELECT 0 i\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 1\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 2\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 3\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 4\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 5\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 6\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 7\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 8\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 9\n" +
+                    "\t\t\t) t4\n" +
+                    "\t) v\n" +
+                    "LEFT JOIN partidas p ON p.fechaInicio = v.selected_date\n" +
+                    "WHERE selected_date BETWEEN date_sub(curdate(), interval 30 day)\n" +
+                    "\t\tAND curdate()\n" +
+                    "GROUP BY 1\n" +
+                    "\t,2";
+
+            Statement st3 = conn.createStatement();
+            ResultSet rs3 = st3.executeQuery(sql3);
+
+
+            while (rs3.next()) {
+                fechas.add(rs3.getString(1));
+                partidas.add(rs3.getInt(3));
+            }
+
+
+            //Graficos de barra - Consulta para array de jugadores en los ultimos 30 dias
+            String sql4 = "SELECT CONCAT (\n" +
+                    "\t\tmonth(v.selected_date)\n" +
+                    "\t\t,\"-\"\n" +
+                    "\t\t,day(v.selected_date)\n" +
+                    "\t\t) AS fecha\n" +
+                    "\t,p.fechaInicio\n" +
+                    "\t,count(DISTINCT p.idUsuario)\n" +
+                    "FROM (\n" +
+                    "\tSELECT adddate('1970-01-01', t4.i * 10000 + t3.i * 1000 + t2.i * 100 + t1.i * 10 + t0.i) selected_date\n" +
+                    "\tFROM (\n" +
+                    "\t\tSELECT 0 i\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 1\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 2\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 3\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 4\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 5\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 6\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 7\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 8\n" +
+                    "\t\t\n" +
+                    "\t\tUNION\n" +
+                    "\t\t\n" +
+                    "\t\tSELECT 9\n" +
+                    "\t\t) t0\n" +
+                    "\t\t,(\n" +
+                    "\t\t\tSELECT 0 i\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 1\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 2\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 3\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 4\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 5\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 6\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 7\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 8\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 9\n" +
+                    "\t\t\t) t1\n" +
+                    "\t\t,(\n" +
+                    "\t\t\tSELECT 0 i\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 1\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 2\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 3\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 4\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 5\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 6\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 7\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 8\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 9\n" +
+                    "\t\t\t) t2\n" +
+                    "\t\t,(\n" +
+                    "\t\t\tSELECT 0 i\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 1\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 2\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 3\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 4\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 5\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 6\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 7\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 8\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 9\n" +
+                    "\t\t\t) t3\n" +
+                    "\t\t,(\n" +
+                    "\t\t\tSELECT 0 i\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 1\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 2\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 3\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 4\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 5\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 6\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 7\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 8\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tUNION\n" +
+                    "\t\t\t\n" +
+                    "\t\t\tSELECT 9\n" +
+                    "\t\t\t) t4\n" +
+                    "\t) v\n" +
+                    "LEFT JOIN partidas p ON p.fechaInicio = v.selected_date\n" +
+                    "WHERE selected_date BETWEEN date_sub(curdate(), interval 30 day)\n" +
+                    "\t\tAND curdate()\n" +
+                    "GROUP BY 1\n" +
+                    "\t,2";
+
+            Statement st4 = conn.createStatement();
+            ResultSet rs4 = st4.executeQuery(sql4);
+
+
+            while (rs4.next()) {
+
+                jugadores.add(rs4.getInt(3));
+            }
+           GraficoBarras grafico = new GraficoBarras(fechas, partidas, jugadores);
+            EstadisticasGlobalesDTO dto = new EstadisticasGlobalesDTO(tortaIzq, tortaDer, grafico);
+        return ResponseEntity.status(200).body(dto);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return ResponseEntity.status(400).body(null);
         } finally {
             cerrarConexion();
         }
