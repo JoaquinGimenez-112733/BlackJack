@@ -140,27 +140,29 @@ export class ReportesComponent {
       ] as any;
     });
 
-    this.reporteService.getGrafico().subscribe((data) => {
-      // Grafico historico
-      this.barChartData = {
-        labels: [...data.fecha],
-        datasets: [
-          {
-            data: [...data.jugadores],
-            label: 'Jugadores',
-            borderWidth: 0,
-            backgroundColor: ['#FF6384bb'],
-            hoverBackgroundColor: ['#FF6384'],
-          },
-          {
-            data: [...data.partidas],
-            label: 'Partidas',
-            borderWidth: 0,
-            backgroundColor: ['#36A2EBbb'],
-            hoverBackgroundColor: ['#36A2EB'],
-          },
-        ],
-      };
+    this.reporteService.getGraficoPartidas().subscribe((dataPartidas) => {
+      this.reporteService.getGraficoJugadores().subscribe((dataJugadores) => {
+        // Grafico historico
+        this.barChartData = {
+          labels: [...dataPartidas.fecha],
+          datasets: [
+            {
+              data: [...dataJugadores.jugadores],
+              label: 'Jugadores',
+              borderWidth: 0,
+              backgroundColor: ['#FF6384bb'],
+              hoverBackgroundColor: ['#FF6384'],
+            },
+            {
+              data: [...dataPartidas.partidas],
+              label: 'Partidas',
+              borderWidth: 0,
+              backgroundColor: ['#36A2EBbb'],
+              hoverBackgroundColor: ['#36A2EB'],
+            },
+          ],
+        };
+      });
     });
   }
 

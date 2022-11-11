@@ -26,7 +26,10 @@ export class ReportesService {
   getTortaDer(): Observable<TortaDer> {
     return this._http.get<any>(this.apiURL + '/tortaDer');
   }
-  getGrafico(): Observable<Grafico> {
-    return this._http.get<any>(this.apiURL + '/grafico');
+  getGraficoPartidas(): Observable<Grafico> {
+    return this._http.get<any>(this.apiURL + '/grafico-partidas');
+  }
+  getGraficoJugadores(): Observable<Grafico> {
+    return this._http.get<any>(this.apiURL + '/grafico-jugadores');
   }
 }

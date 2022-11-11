@@ -1,15 +1,15 @@
 package Models;
 
-import Models.Reportes.GraficoBarras;
+import Models.Reportes.GraficoBarrasPartidas;
 import Models.Reportes.TortaDer;
 import Models.Reportes.TortaIzq;
 
 public class EstadisticasGlobalesDTO {
     private TortaIzq tortaIzq;
     private TortaDer tortaDer;
-    private GraficoBarras grafico;
+    private GraficoBarrasPartidas grafico;
 
-    public EstadisticasGlobalesDTO(TortaIzq tortaIzq, TortaDer tortaDer, GraficoBarras grafico) {
+    public EstadisticasGlobalesDTO(TortaIzq tortaIzq, TortaDer tortaDer, GraficoBarrasPartidas grafico) {
         this.tortaIzq = tortaIzq;
         this.tortaDer = tortaDer;
         this.grafico = grafico;
@@ -31,11 +31,11 @@ public class EstadisticasGlobalesDTO {
         this.tortaDer = tortaDer;
     }
 
-    public GraficoBarras getGrafico() {
+    public GraficoBarrasPartidas getGrafico() {
         return grafico;
     }
 
-    public void setGrafico(GraficoBarras grafico) {
+    public void setGrafico(GraficoBarrasPartidas grafico) {
         this.grafico = grafico;
     }
 }
