@@ -799,3 +799,431 @@ VALUES (
 	,0
 	,1
 	)
+
+CREATE VIEW v_partidas_mes
+AS
+SELECT CONCAT (
+		month(v.selected_date)
+		,"-"
+		,day(v.selected_date)
+		) AS fecha
+	,p.fechaInicio
+	,count(DISTINCT p.id)
+FROM (
+	SELECT adddate('1970-01-01', t4.i * 10000 + t3.i * 1000 + t2.i * 100 + t1.i * 10 + t0.i) selected_date
+	FROM (
+		SELECT 0 i
+		
+		UNION
+		
+		SELECT 1
+		
+		UNION
+		
+		SELECT 2
+		
+		UNION
+		
+		SELECT 3
+		
+		UNION
+		
+		SELECT 4
+		
+		UNION
+		
+		SELECT 5
+		
+		UNION
+		
+		SELECT 6
+		
+		UNION
+		
+		SELECT 7
+		
+		UNION
+		
+		SELECT 8
+		
+		UNION
+		
+		SELECT 9
+		) t0
+		,(
+			SELECT 0 i
+			
+			UNION
+			
+			SELECT 1
+			
+			UNION
+			
+			SELECT 2
+			
+			UNION
+			
+			SELECT 3
+			
+			UNION
+			
+			SELECT 4
+			
+			UNION
+			
+			SELECT 5
+			
+			UNION
+			
+			SELECT 6
+			
+			UNION
+			
+			SELECT 7
+			
+			UNION
+			
+			SELECT 8
+			
+			UNION
+			
+			SELECT 9
+			) t1
+		,(
+			SELECT 0 i
+			
+			UNION
+			
+			SELECT 1
+			
+			UNION
+			
+			SELECT 2
+			
+			UNION
+			
+			SELECT 3
+			
+			UNION
+			
+			SELECT 4
+			
+			UNION
+			
+			SELECT 5
+			
+			UNION
+			
+			SELECT 6
+			
+			UNION
+			
+			SELECT 7
+			
+			UNION
+			
+			SELECT 8
+			
+			UNION
+			
+			SELECT 9
+			) t2
+		,(
+			SELECT 0 i
+			
+			UNION
+			
+			SELECT 1
+			
+			UNION
+			
+			SELECT 2
+			
+			UNION
+			
+			SELECT 3
+			
+			UNION
+			
+			SELECT 4
+			
+			UNION
+			
+			SELECT 5
+			
+			UNION
+			
+			SELECT 6
+			
+			UNION
+			
+			SELECT 7
+			
+			UNION
+			
+			SELECT 8
+			
+			UNION
+			
+			SELECT 9
+			) t3
+		,(
+			SELECT 0 i
+			
+			UNION
+			
+			SELECT 1
+			
+			UNION
+			
+			SELECT 2
+			
+			UNION
+			
+			SELECT 3
+			
+			UNION
+			
+			SELECT 4
+			
+			UNION
+			
+			SELECT 5
+			
+			UNION
+			
+			SELECT 6
+			
+			UNION
+			
+			SELECT 7
+			
+			UNION
+			
+			SELECT 8
+			
+			UNION
+			
+			SELECT 9
+			) t4
+	) v
+LEFT JOIN partidas p ON p.fechaInicio = v.selected_date
+WHERE selected_date BETWEEN date_sub(curdate(), interval 30 day)
+		AND curdate()
+GROUP BY 1
+	,2;
+
+
+
+CREATE VIEW v_jugadores_mes
+AS
+SELECT CONCAT (
+		month(v.selected_date)
+		,"-"
+		,day(v.selected_date)
+		) AS fecha
+	,p.fechaInicio
+	,count(DISTINCT p.idUsuario)
+FROM (
+	SELECT adddate('1970-01-01', t4.i * 10000 + t3.i * 1000 + t2.i * 100 + t1.i * 10 + t0.i) selected_date
+	FROM (
+		SELECT 0 i
+		
+		UNION
+		
+		SELECT 1
+		
+		UNION
+		
+		SELECT 2
+		
+		UNION
+		
+		SELECT 3
+		
+		UNION
+		
+		SELECT 4
+		
+		UNION
+		
+		SELECT 5
+		
+		UNION
+		
+		SELECT 6
+		
+		UNION
+		
+		SELECT 7
+		
+		UNION
+		
+		SELECT 8
+		
+		UNION
+		
+		SELECT 9
+		) t0
+		,(
+			SELECT 0 i
+			
+			UNION
+			
+			SELECT 1
+			
+			UNION
+			
+			SELECT 2
+			
+			UNION
+			
+			SELECT 3
+			
+			UNION
+			
+			SELECT 4
+			
+			UNION
+			
+			SELECT 5
+			
+			UNION
+			
+			SELECT 6
+			
+			UNION
+			
+			SELECT 7
+			
+			UNION
+			
+			SELECT 8
+			
+			UNION
+			
+			SELECT 9
+			) t1
+		,(
+			SELECT 0 i
+			
+			UNION
+			
+			SELECT 1
+			
+			UNION
+			
+			SELECT 2
+			
+			UNION
+			
+			SELECT 3
+			
+			UNION
+			
+			SELECT 4
+			
+			UNION
+			
+			SELECT 5
+			
+			UNION
+			
+			SELECT 6
+			
+			UNION
+			
+			SELECT 7
+			
+			UNION
+			
+			SELECT 8
+			
+			UNION
+			
+			SELECT 9
+			) t2
+		,(
+			SELECT 0 i
+			
+			UNION
+			
+			SELECT 1
+			
+			UNION
+			
+			SELECT 2
+			
+			UNION
+			
+			SELECT 3
+			
+			UNION
+			
+			SELECT 4
+			
+			UNION
+			
+			SELECT 5
+			
+			UNION
+			
+			SELECT 6
+			
+			UNION
+			
+			SELECT 7
+			
+			UNION
+			
+			SELECT 8
+			
+			UNION
+			
+			SELECT 9
+			) t3
+		,(
+			SELECT 0 i
+			
+			UNION
+			
+			SELECT 1
+			
+			UNION
+			
+			SELECT 2
+			
+			UNION
+			
+			SELECT 3
+			
+			UNION
+			
+			SELECT 4
+			
+			UNION
+			
+			SELECT 5
+			
+			UNION
+			
+			SELECT 6
+			
+			UNION
+			
+			SELECT 7
+			
+			UNION
+			
+			SELECT 8
+			
+			UNION
+			
+			SELECT 9
+			) t4
+	) v
+LEFT JOIN partidas p ON p.fechaInicio = v.selected_date
+WHERE selected_date BETWEEN date_sub(curdate(), interval 30 day)
+		AND curdate()
+GROUP BY 1
+	,2;

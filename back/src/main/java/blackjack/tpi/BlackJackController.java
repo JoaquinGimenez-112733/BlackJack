@@ -444,7 +444,7 @@ public class BlackJackController {
     private String abrirConexion() {
         String msj = "";
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "root", "123456");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BlackJack", "root", "nikolas06");
             msj = "Conexion exitosa!";
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -662,7 +662,13 @@ public class BlackJackController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value = "/reportesIndividuales")
     public ResponseEntity<EstadisticasDTO> getResultadosIndividuales() {
+        
+        Connection conn = null;
+Statement st = null;
+ResultSet rs = null;
         try {
+            
+            
             System.out.println(userId);
             abrirConexion();
             Rachas rachaV = new Rachas(0, 0, 0);
@@ -877,7 +883,9 @@ public class BlackJackController {
             ex.printStackTrace();
             return ResponseEntity.status(200).body(null);
         } finally {
-            cerrarConexion();
+               try { rs.close(); } catch (Exception errorRS) { errorRS.printStackTrace(); }
+    try { st.close(); } catch (Exception errorST) { errorST.printStackTrace(); }
+    try { conn.close(); } catch (Exception errorCONN) { errorCONN.printStackTrace(); }
         }
 
     }
